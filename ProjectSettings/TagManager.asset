@@ -9,6 +9,7 @@ TagManager:
   - Enemy Ship 1
   - Enemy Ship 2
   - Enemy Bullet
+  - BulletPowerup
   layers:
   - Default
   - TransparentFX

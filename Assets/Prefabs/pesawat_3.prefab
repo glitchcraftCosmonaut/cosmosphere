@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f17c6712e47ec8438aedf19e2125b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  powerUp: {fileID: 4538187297746378070, guid: 143525ef0a7cfd44980724e115c64c06, type: 3}
   explosion: {fileID: 129538, guid: 852f11a8154df194e9376a9df0a87433, type: 3}
   smallEnemyBullet: {fileID: 3202969236751210887, guid: c48bea3f7db95644eb053aa7b0372a65, type: 3}
   minReloadTime: 1

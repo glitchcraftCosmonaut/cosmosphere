@@ -15,7 +15,7 @@ public class Player : MonoBehaviour
     [Header("Physics and rendering")]
     Rigidbody2D playerRigidbody;
     CircleCollider2D playerCollider;
-    private Renderer playerRenderer;	
+    public Renderer playerRenderer;	
 
 
     [Header("Gun n Bullets")]
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
 
         playerRigidbody = GetComponent<Rigidbody2D>();
         playerCollider = GetComponent<CircleCollider2D>();
-        playerRenderer = gameObject.GetComponentInChildren<Renderer>();
+        // playerRenderer = gameObject.GetComponentInChildren<Renderer>();
         shootSoundFX = gameObject.GetComponent<AudioSource>();
         currentSpeed = moveSpeed;
         activePlayerTurrets = new List<GameObject>();
@@ -127,7 +127,32 @@ public class Player : MonoBehaviour
     shootSoundFX.Play();
   }
 
-  void UpgradeWeapons() 
+
+    
+    void OnTriggerEnter2D(Collider2D other) 
+    {
+		if (other.gameObject.tag == "BulletPowerup") 
+        {
+			PowerUp powerupScript = other.gameObject.GetComponent<PowerUp>();
+			powerupScript.PowerupCollected();
+			UpgradeWeapons();
+		} 
+        if (other.gameObject.tag == "Enemy Ship 1" || other.gameObject.tag == "Enemy Ship 2" || other.gameObject.tag == "Enemy Bullet") 
+        {
+            // GameController.SharedInstance.ShowGameOver();  // If the player is hit by an enemy ship or laser it's game over.
+			playerRenderer.enabled = false;       // We can't destroy the player game object straight away or any code from this point on will not be executed
+			playerCollider.enabled = false;       // We turn off the players renderer so the player is not longer displayed and turn off the players collider
+            playerThrust.Stop();
+			Instantiate(explosion, transform.position, transform.rotation);   // Then we Instantiate the explosions... one at the centre and some additional around the players location for a bigger bang!
+			for (int i = 0 ; i < 8; i++) 
+            {
+				Vector3 randomOffset = new Vector3 (transform.position.x + Random.Range(-0.6f, 0.6f), transform.position.y + Random.Range(-0.6f, 0.6f), 0.0f); 
+				Instantiate(explosion, randomOffset, transform.rotation);
+			}
+			Destroy(gameObject, 1.0f); // The second parameter in Destroy is a delay to make sure we have finished exploding before we remove the player from the scene.
+		}
+	}
+      void UpgradeWeapons() 
 	{     
 
     // We check the upgrade state of the player and add the appropriate additional turret gameobjects to the active turrets List.
@@ -178,31 +203,6 @@ public class Player : MonoBehaviour
 			}
 			shootSoundFX.Play();
 			yield return new WaitForSeconds(scatterShotTurretReloadTime);
-		}
-	}
-
-    
-    void OnTriggerEnter2D(Collider2D other) 
-    {
-		// if (other.gameObject.tag == "Powerup") 
-        // {
-		// 	CollectPowerup powerupScript = other.gameObject.GetComponent<CollectPowerup>();
-		// 	powerupScript.PowerupCollected();
-		// 	UpgradeWeapons();
-		// } 
-        if (other.gameObject.tag == "Enemy Ship 1" || other.gameObject.tag == "Enemy Ship 2" || other.gameObject.tag == "Enemy Bullet") 
-        {
-            // GameController.SharedInstance.ShowGameOver();  // If the player is hit by an enemy ship or laser it's game over.
-			playerRenderer.enabled = false;       // We can't destroy the player game object straight away or any code from this point on will not be executed
-			playerCollider.enabled = false;       // We turn off the players renderer so the player is not longer displayed and turn off the players collider
-            playerThrust.Stop();
-			Instantiate(explosion, transform.position, transform.rotation);   // Then we Instantiate the explosions... one at the centre and some additional around the players location for a bigger bang!
-			for (int i = 0 ; i < 8; i++) 
-            {
-				Vector3 randomOffset = new Vector3 (transform.position.x + Random.Range(-0.6f, 0.6f), transform.position.y + Random.Range(-0.6f, 0.6f), 0.0f); 
-				Instantiate(explosion, randomOffset, transform.rotation);
-			}
-			Destroy(gameObject, 1.0f); // The second parameter in Destroy is a delay to make sure we have finished exploding before we remove the player from the scene.
 		}
 	}
 }

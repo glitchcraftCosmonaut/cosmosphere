@@ -3,7 +3,7 @@ using System.Collections;
 
 public class EnemyDroneController : MonoBehaviour {
 
-	// public GameObject powerUp;
+	public GameObject powerUp;
 	public GameObject explosion;
 	public GameObject smallEnemyBullet;
 	public float minReloadTime = 1.0f;
@@ -42,10 +42,10 @@ public class EnemyDroneController : MonoBehaviour {
 		{
       		GameController.SharedInstance.IncrementScore(10);
 			float randomNumber = Random.Range(0.0f, 10.0f);
-			// if (randomNumber > 9.0f) 
-			// {
-			// 	Instantiate(powerUp, gameObject.transform.position, gameObject.transform.rotation);
-			// }
+			if (randomNumber > 9.0f) 
+			{
+				Instantiate(powerUp, gameObject.transform.position, gameObject.transform.rotation);
+			}
 			Instantiate(explosion, gameObject.transform.position, gameObject.transform.rotation);
 			camRipple.RippleEffect();
 			other.gameObject.SetActive(false);
