@@ -15,7 +15,8 @@ public class Player : MonoBehaviour
     [Header("Physics and rendering")]
     Rigidbody2D playerRigidbody;
     CircleCollider2D playerCollider;
-    public Renderer playerRenderer;	
+    public Renderer playerRenderer;
+    public bool isDead = false;
 
 
     [Header("Gun n Bullets")]
@@ -149,7 +150,9 @@ public class Player : MonoBehaviour
 				Vector3 randomOffset = new Vector3 (transform.position.x + Random.Range(-0.6f, 0.6f), transform.position.y + Random.Range(-0.6f, 0.6f), 0.0f); 
 				Instantiate(explosion, randomOffset, transform.rotation);
 			}
-			Destroy(gameObject, 1.0f); // The second parameter in Destroy is a delay to make sure we have finished exploding before we remove the player from the scene.
+			// Destroy(gameObject, 1.0f); // The second parameter in Destroy is a delay to make sure we have finished exploding before we remove the player from the scene.
+            gameObject.SetActive(false);
+            isDead = true;
 		}
 	}
       void UpgradeWeapons() 

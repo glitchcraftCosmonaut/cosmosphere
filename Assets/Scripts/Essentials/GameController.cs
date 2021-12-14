@@ -8,8 +8,10 @@ public class GameController: MonoBehaviour
 
 	public static GameController SharedInstance;
 
-	public Text scoreLabel;
+	// public Text scoreLabel;
 	private int currentScore = 0;
+
+	int highScore;
 	// public Text gameOverLabel;
 	// public Button restartGameButton;
 
@@ -28,6 +30,18 @@ public class GameController: MonoBehaviour
 	public GameObject topBoundary;                    // is not able to leave the screen.
 	public GameObject bottomBoundary;                 //
 
+	[SerializeField] PointsHUD pointsHUD;
+	[SerializeField] HighScoreHandler highScoreHandler;
+	[SerializeField] Player player;
+
+	// public int HighScore
+	// {
+	// 	set
+	// 	{
+	// 		highScore = value;
+	// 		// SetHighScore(value);
+	// 	}
+	// }
 	void Awake () 
 	{
 		SharedInstance = this;
@@ -36,6 +50,10 @@ public class GameController: MonoBehaviour
 	void Start () 
 	{
 		StartCoroutine(SpawnEnemyWaves());
+	}
+	private void Update() 
+	{
+		OnDeath();
 	}
 
 	IEnumerator SpawnEnemyWaves () 
@@ -77,11 +95,41 @@ public class GameController: MonoBehaviour
 		}
 	}
 
+	// private void SetLatestHighScore()
+	// {
+	// 	HighScore = PlayerPrefs.GetInt("Highscore", 0);
+	// }
+
+	// private void SaveHighScore(int score)
+	// {
+	// 	PlayerPrefs.SetInt("Highscore", score);
+	// }
+
 	public void IncrementScore(int increment) 
 	{
 		currentScore += increment;
-		scoreLabel.text = "Score: " + currentScore;
+		pointsHUD.Points += currentScore;
+		// highScoreHandler.SetHighScoreIfGreater(pointsHUD.Points);
 	}
+	public void OnDeath()
+	{
+		if(player.isDead == true)
+		{
+			highScoreHandler.SetHighScoreIfGreater(pointsHUD.Points);
+		}
+	}
+	
+	
+	// public void SetHighScore(int score)
+	// {
+	// 	score = currentScore;
+	// 	if(currentScore > highScore)
+	// 	{
+	// 		HighScore = currentScore;
+	// 		SaveHighScore(currentScore);
+	// 		highScoreLabel.text = "Highscore : " + currentScore;
+	// 	}
+	// }
 
 	// public void ShowGameOver() 
 	// {
