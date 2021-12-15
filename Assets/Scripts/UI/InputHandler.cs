@@ -5,22 +5,22 @@ using UnityEngine.UI;
 
 public class InputHandler : MonoBehaviour
 {
-    [SerializeField] InputField nameInput;
-    [SerializeField] string filename;
+    // [SerializeField] public InputField nameInput;
+    // [SerializeField] string filename;
 
-    List<InputEntry> entries = new List<InputEntry>();
+    // List<HighScoreElement> entries = new List<HighScoreElement>();
     
 
     private void Start() 
     {
-        entries = FileHandler.ReadListFromJSON<InputEntry>(filename);
+        // entries = FileHandler.ReadListFromJSON<InputEntry>(filename);
     }
 
     public void AddNameToList()
     {
-        entries.Add (new InputEntry(nameInput.text, Random.Range(0,100)));
-        nameInput.text = " ";
-
-        FileHandler.SaveToJSON<InputEntry>(entries, filename);
+        // entries.Add (new HighScoreElement(nameInput.text, GameController.SharedInstance.pointsHUD.Points));
+        // nameInput.text = GameController.SharedInstance.playerName;
+        GameController.SharedInstance.highScoreHandler.AddHighscoreIfPossible(new HighScoreElement(GameController.SharedInstance.playerName.text, GameController.SharedInstance.pointsHUD.Points));
+        // FileHandler.SaveToJSON<InputEntry>(entries, filename);
     }
 }

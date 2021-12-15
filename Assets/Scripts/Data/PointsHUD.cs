@@ -6,8 +6,11 @@ using UnityEngine.UI;
 public class PointsHUD : MonoBehaviour
 {
     [SerializeField] Text scoreText;
+    [SerializeField] Text scoreGameOver;
 
     int scores = 0;
+
+    public int growthRate;
     
 
     private void Awake() 
@@ -24,8 +27,14 @@ public class PointsHUD : MonoBehaviour
         }
     }
     
+    public void ResetPoints ()
+    {
+        scores = 0;
+        UpdateHUD ();
+    }
     private void UpdateHUD()
     {
         scoreText.text = "Score : " + scores.ToString();
+        scoreGameOver.text = scores.ToString();
     }
 }

@@ -8,15 +8,21 @@ public class GameController: MonoBehaviour
 
 	public static GameController SharedInstance;
 
+	[Header("Scoring")]
 	// public Text scoreLabel;
 	private int currentScore = 0;
 
-	int highScore;
-	// public Text gameOverLabel;
-	// public Button restartGameButton;
+	
+	[Header("MENU")]
+	public GameObject pauseMenu;
+	public GameObject gameOverMenu;
+	public bool isPaused;
+	public bool isGameOver;
 
+	[Header("Enemy Manager")]
 	public GameObject enemyType1;
 	public GameObject enemyType2;
+	public GameObject enemyType3;
 
 	public GameObject subBoss;
 
@@ -25,23 +31,22 @@ public class GameController: MonoBehaviour
 	public float spawnInterval = 0.5f;
 	public int enemiesPerWave = 5;
 
+
+	[Header("Boundaries")]
 	public GameObject leftBoundary;                   //
 	public GameObject rightBoundary;                  // References to the screen bounds: Used to ensure the player
 	public GameObject topBoundary;                    // is not able to leave the screen.
 	public GameObject bottomBoundary;                 //
 
-	[SerializeField] PointsHUD pointsHUD;
-	[SerializeField] HighScoreHandler highScoreHandler;
+
+	[Header("Data Scoring")]
+	[SerializeField] public PointsHUD pointsHUD;
+	[SerializeField] public HighScoreHandler highScoreHandler;
+	// [SerializeField] public string playerName;
+	[SerializeField] public InputField playerName;
 	[SerializeField] Player player;
 
-	// public int HighScore
-	// {
-	// 	set
-	// 	{
-	// 		highScore = value;
-	// 		// SetHighScore(value);
-	// 	}
-	// }
+
 	void Awake () 
 	{
 		SharedInstance = this;
@@ -50,10 +55,29 @@ public class GameController: MonoBehaviour
 	void Start () 
 	{
 		StartCoroutine(SpawnEnemyWaves());
+		Cursor.visible = false;
+		// OnDeath();
 	}
 	private void Update() 
 	{
-		OnDeath();
+		if(!isGameOver)
+		{
+			if(Input.GetKeyDown(KeyCode.Escape))
+			{
+				if(isPaused)
+				{
+					Resume();
+				}
+				else
+				{
+					Pause();
+				}
+			}
+			if(isGameOver == true)
+			{
+				ShowGameOver();
+			}
+		}
 	}
 
 	IEnumerator SpawnEnemyWaves () 
@@ -78,8 +102,8 @@ public class GameController: MonoBehaviour
 						enemy1.transform.rotation = spawnRotation;
 						enemy1.SetActive(true);
 					}
-				} 
-				else 
+				}
+				else if(waveType >= 3.0f)
 				{
 					GameObject enemy2 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 2"); 
 					if (enemy2 != null) 
@@ -88,6 +112,16 @@ public class GameController: MonoBehaviour
 						enemy2.transform.rotation = spawnRotation;
 						enemy2.SetActive(true);
 					}
+				}
+				else 
+				{
+					GameObject enemy3 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 3"); 
+					if (enemy3 != null) 
+					{
+						enemy3.transform.position = spawnPosition;
+						enemy3.transform.rotation = spawnRotation;
+						enemy3.SetActive(true);
+					}
 				} 
         	yield return new WaitForSeconds (spawnInterval);
 			} 
@@ -95,50 +129,58 @@ public class GameController: MonoBehaviour
 		}
 	}
 
-	// private void SetLatestHighScore()
-	// {
-	// 	HighScore = PlayerPrefs.GetInt("Highscore", 0);
-	// }
-
-	// private void SaveHighScore(int score)
-	// {
-	// 	PlayerPrefs.SetInt("Highscore", score);
-	// }
-
 	public void IncrementScore(int increment) 
 	{
 		currentScore += increment;
 		pointsHUD.Points += currentScore;
-		// highScoreHandler.SetHighScoreIfGreater(pointsHUD.Points);
 	}
 	public void OnDeath()
 	{
-		if(player.isDead == true)
-		{
-			highScoreHandler.SetHighScoreIfGreater(pointsHUD.Points);
-		}
+		// player.gameObject.SetActive(false);
+		// // if(player.isDead == true)
+		// // {
+		// // 	// highScoreHandler.SetHighScoreIfGreater(pointsHUD.Points);
+		// // 	highScoreHandler.AddHighscoreIfPossible(new HighScoreElement(playerName, pointsHUD.Points));
+		// // }
+		// highScoreHandler.AddHighscoreIfPossible(new HighScoreElement(playerName, pointsHUD.Points));
+
 	}
 	
-	
-	// public void SetHighScore(int score)
-	// {
-	// 	score = currentScore;
-	// 	if(currentScore > highScore)
-	// 	{
-	// 		HighScore = currentScore;
-	// 		SaveHighScore(currentScore);
-	// 		highScoreLabel.text = "Highscore : " + currentScore;
-	// 	}
-	// }
 
-	// public void ShowGameOver() 
-	// {
-	// 	gameOverLabel.rectTransform.anchoredPosition3D = new Vector3 (0, 0, 0);
-	// 	restartGameButton.GetComponent<RectTransform>().anchoredPosition3D = new Vector3 (0, -50, 0);
-	// }
+	public void ShowGameOver() 
+	{
+		gameOverMenu.SetActive(true);
+		Cursor.visible = true;
+		isGameOver = true;
+	}
+
+	public void Pause()
+	{
+		pauseMenu.SetActive(true);
+		Time.timeScale = 0;
+		AudioListener.pause = true;
+		Cursor.visible = true;
+		isPaused = true;
+
+	}
+
+	public void Resume()
+	{
+		pauseMenu.SetActive(false);
+		Time.timeScale = 1;
+		AudioListener.pause = false;
+		Cursor.visible = false;
+		isPaused = false;
+	}
 
 	public void RestartGame() 
 	{
-		SceneManager.LoadScene("GameScene");
+		SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+		isGameOver = false;
+	}
+
+	public void Quit()
+	{
+		SceneManager.LoadScene("Main Menu");
 	}
 }

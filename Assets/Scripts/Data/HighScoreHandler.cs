@@ -4,41 +4,61 @@ using UnityEngine;
 
 public class HighScoreHandler : MonoBehaviour
 {
-    [SerializeField] HighScoreUI highScoreUI;
+    List<HighScoreElement> highscoreList = new List<HighScoreElement> ();
+    [SerializeField] int maxCount = 7;
+    [SerializeField] string filename;
 
-    int highScore;
+    public delegate void OnHighscoreListChanged (List<HighScoreElement> list);
+    public static event OnHighscoreListChanged onHighscoreListChanged;
+    
 
-    public int HighScore
+    private void Start () 
     {
-        set
+        LoadHighscores ();
+    }
+
+    private void LoadHighscores () 
+    {
+        highscoreList = FileHandler.ReadListFromJSON<HighScoreElement> (filename);
+
+        while (highscoreList.Count > maxCount) 
         {
-            highScore = value;
-            highScoreUI.SetHighScore(value);
+            highscoreList.RemoveAt (maxCount);
+        }
+
+        if (onHighscoreListChanged != null) 
+        {
+            onHighscoreListChanged.Invoke (highscoreList);
         }
     }
 
-    // Start is called before the first frame update
-    void Start()
+    private void SaveHighscore () 
     {
-        SetLatestHighScore();
+        FileHandler.SaveToJSON<HighScoreElement> (highscoreList, filename);
     }
 
-    void SetLatestHighScore()
+    public void AddHighscoreIfPossible (HighScoreElement element) 
     {
-        HighScore = PlayerPrefs.GetInt("highscore", 0);
-    }
+        for (int i = 0; i < maxCount; i++) {
+            if (i >= highscoreList.Count || element.score >= highscoreList[i].score) 
+            {
+                // add new high score
+                highscoreList.Insert (i, element);
 
-    void SaveHighScore(int score)
-    {
-        PlayerPrefs.SetInt("highscore", score);
-    }
+                while (highscoreList.Count > maxCount) 
+                {
+                    highscoreList.RemoveAt (maxCount);
+                }
 
-    public void SetHighScoreIfGreater(int score)
-    {
-        if(score > highScore)
-        {
-            HighScore = score;
-            SaveHighScore(score);
+                SaveHighscore ();
+
+                if (onHighscoreListChanged != null) 
+                {
+                    onHighscoreListChanged.Invoke (highscoreList);
+                }
+
+                break;
+            }
         }
     }
 }

@@ -14,7 +14,7 @@ public class Player : MonoBehaviour
 
     [Header("Physics and rendering")]
     Rigidbody2D playerRigidbody;
-    CircleCollider2D playerCollider;
+    [HideInInspector] public CircleCollider2D playerCollider;
     public Renderer playerRenderer;
     public bool isDead = false;
 
@@ -35,8 +35,19 @@ public class Player : MonoBehaviour
 	public List<GameObject> playerBullet;
     public float scatterShotTurretReloadTime = 2.0f;
 
+    [Header("Hitbox")]
+    public float minimum = 0.0f;
+    public float maximum = 1f;
+    public float duration = 10.0f;
+    bool faded;
+    private float startTime;
+    [SerializeField] SpriteRenderer hitBoxSprite;
+    [SerializeField] GameObject hitbox;
+
     [Header("Power Ups")]
     public int upgradeState = 0;
+    GameObject shield;
+    public Health health;
 
     [Header("Boundaries")]
     private GameObject leftBoundary;                   //
@@ -61,6 +72,11 @@ public class Player : MonoBehaviour
         currentSpeed = moveSpeed;
         activePlayerTurrets = new List<GameObject>();
 		activePlayerTurrets.Add(startWeapon);
+        shield = transform.Find("Shield").gameObject;
+
+        startTime = Time.time;
+        faded = true;
+
     }
 
     // Update is called once per frame
@@ -71,12 +87,18 @@ public class Player : MonoBehaviour
 
         if(Input.GetKey(KeyCode.LeftShift))
         {
+            // Fading();
             currentSpeed = focusSpeed;
+            hitbox.SetActive(true);
+
         }
         else
         {
             currentSpeed = moveSpeed;
+            hitbox.SetActive(false);
+
         }
+        
         shoot = Input.GetKey(KeyCode.Z);
 
         if(shoot)
@@ -107,11 +129,40 @@ public class Player : MonoBehaviour
             Mathf.Clamp (playerRigidbody.position.x, leftBoundary.transform.position.x, rightBoundary.transform.position.x),
 			Mathf.Clamp (playerRigidbody.position.y, bottomBoundary.transform.position.y, topBoundary.transform.position.y)
         );
+
+
+        
     }
     private void FixedUpdate() 
     {
         playerRigidbody.MovePosition(playerRigidbody.position + movement * currentSpeed * Time.deltaTime);
         
+    }
+
+    void Fading()
+    {
+        float t = (Time.time - startTime) / duration;
+        Color color = hitBoxSprite.material.color;
+        if(faded)
+        {
+            
+            color = new Color(1f,1f,1f,Mathf.SmoothStep(minimum, maximum, t));
+            if(t > 1f)
+            {
+                faded = false;
+                startTime = Time.time;
+            }
+        }
+        else
+        {
+            color = new Color(1f,1f,1f,Mathf.SmoothStep(maximum, minimum, t));
+            if(t > 1f)
+            {
+                faded = true;
+                startTime = Time.time;
+            }
+
+        }
     }
     void Shoot() 
     {
@@ -125,8 +176,24 @@ public class Player : MonoBehaviour
                 bullet.SetActive(true);
             }
         }
-    shootSoundFX.Play();
-  }
+        shootSoundFX.Play();
+    }
+
+    
+    void ACtiveShield()
+    {
+        shield.SetActive(true);
+    }
+
+    public void DeactiveShield()
+    {
+        shield.SetActive(false);
+    }
+    
+    public bool HasShield()
+    {
+        return shield.activeSelf;
+    }
 
 
     
@@ -138,22 +205,52 @@ public class Player : MonoBehaviour
 			powerupScript.PowerupCollected();
 			UpgradeWeapons();
 		} 
-        if (other.gameObject.tag == "Enemy Ship 1" || other.gameObject.tag == "Enemy Ship 2" || other.gameObject.tag == "Enemy Bullet") 
+        if(other.gameObject.tag == "ShieldPowerup")
         {
-            // GameController.SharedInstance.ShowGameOver();  // If the player is hit by an enemy ship or laser it's game over.
-			playerRenderer.enabled = false;       // We can't destroy the player game object straight away or any code from this point on will not be executed
-			playerCollider.enabled = false;       // We turn off the players renderer so the player is not longer displayed and turn off the players collider
-            playerThrust.Stop();
-			Instantiate(explosion, transform.position, transform.rotation);   // Then we Instantiate the explosions... one at the centre and some additional around the players location for a bigger bang!
-			for (int i = 0 ; i < 8; i++) 
+            PowerUp powerupScript = other.gameObject.GetComponent<PowerUp>();
+            powerupScript.PowerupCollected();
+            ACtiveShield();
+        }
+        if(other.gameObject.tag == "Health Pickup")
+        {
+            PowerUp powerupScript = other.gameObject.GetComponent<PowerUp>();
+            powerupScript.PowerupCollected();
+            health.Heal(10);
+        }
+        if (other.gameObject.tag == "Enemy Ship 1" || other.gameObject.tag == "Enemy Ship 2" || other.gameObject.tag == "Enemy Bullet" || other.gameObject.tag == "Enemy Ship 3") 
+        {
+            if(HasShield())
             {
-				Vector3 randomOffset = new Vector3 (transform.position.x + Random.Range(-0.6f, 0.6f), transform.position.y + Random.Range(-0.6f, 0.6f), 0.0f); 
-				Instantiate(explosion, randomOffset, transform.rotation);
-			}
-			// Destroy(gameObject, 1.0f); // The second parameter in Destroy is a delay to make sure we have finished exploding before we remove the player from the scene.
-            gameObject.SetActive(false);
-            isDead = true;
-		}
+                DeactiveShield();
+                Instantiate(explosion, transform.position, transform.rotation);
+            }
+
+            else
+            {
+                health.Damage(10);
+                Instantiate(explosion, transform.position, transform.rotation);
+
+                if(health.health == 0)
+                {
+                    GameController.SharedInstance.ShowGameOver();  // If the player is hit by an enemy ship or laser it's game over.
+                    playerRenderer.enabled = false;       // We can't destroy the player game object straight away or any code from this point on will not be executed
+                    playerCollider.enabled = false;       // We turn off the players renderer so the player is not longer displayed and turn off the players collider
+                    playerThrust.Stop();
+                    Instantiate(explosion, transform.position, transform.rotation);   // Then we Instantiate the explosions... one at the centre and some additional around the players location for a bigger bang!
+                    for (int i = 0 ; i < 8; i++) 
+                    {
+                        Vector3 randomOffset = new Vector3 (transform.position.x + Random.Range(-0.6f, 0.6f), transform.position.y + Random.Range(-0.6f, 0.6f), 0.0f); 
+                        Instantiate(explosion, randomOffset, transform.rotation);
+                    }
+
+                    // Destroy(gameObject, 1.0f); // The second parameter in Destroy is a delay to make sure we have finished exploding before we remove the player from the scene.
+                    gameObject.SetActive(false);
+                    
+                    // isDead = true;
+                }  
+		    }
+        }
+            
 	}
       void UpgradeWeapons() 
 	{     
@@ -189,7 +286,7 @@ public class Player : MonoBehaviour
   IEnumerator ActivateScatterShotTurret() 
   {
 
-    // The ScatterShot turret is shot independantly of the spacebar
+    // The ScatterShot turret is shot independantly of the z key
     // This Coroutine shoots the scatteshot at a reload interval
 
 		while (true) 

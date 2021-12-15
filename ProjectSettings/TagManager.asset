@@ -10,6 +10,9 @@ TagManager:
   - Enemy Ship 2
   - Enemy Bullet
   - BulletPowerup
+  - ShieldPowerup
+  - Enemy Ship 3
+  - Health Pickup
   layers:
   - Default
   - TransparentFX

@@ -46,7 +46,7 @@ MonoBehaviour:
   Type: 0
   Material: {fileID: 2100000, guid: 9942c237b767f1646a040f5b3220eb43, type: 2}
   Mesh: {fileID: 0}
-  Sprite: {fileID: 2470114695245739177, guid: af37bb9e886d0544f9677473bbb1216c, type: 3}
+  Sprite: {fileID: 21300000, guid: cecea3407896a0143a639c011226f602, type: 3}
   ColliderRadius: 0.1
   ColliderOffset: {x: -0.2, y: 0}
   DefaultPoolSize: 10000

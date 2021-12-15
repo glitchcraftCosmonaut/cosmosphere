@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1912212912}
   m_Layer: 0
   m_Name: Slash_Bullet
-  m_TagString: Player Bullet
+  m_TagString: Enemy Bullet
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: -2246503096186400566, guid: af37bb9e886d0544f9677473bbb1216c, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_Color: {r: 0.98823535, g: 0.9490197, b: 0.21176472, a: 1}
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.28125, y: 0.4375}
@@ -113,7 +113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9b4760123ddcbd64484f56957ead85b0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  direction: {x: 1, y: 0}
+  direction: {x: -1, y: 0}
   speed: 20
   velocity: {x: 1, y: 0}
   isEnemy: 0

@@ -135,11 +135,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f17c6712e47ec8438aedf19e2125b38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  powerUp: {fileID: 4538187297746378070, guid: 143525ef0a7cfd44980724e115c64c06, type: 3}
+  powerUp:
+  - {fileID: 4538187297746378070, guid: 143525ef0a7cfd44980724e115c64c06, type: 3}
+  - {fileID: 618873268489847195, guid: cf2e0f9d5942d8a46bf104dca57f4896, type: 3}
+  - {fileID: 8579127114797441465, guid: 3c84ffc911fcbca40a8f78335e34be8f, type: 3}
   explosion: {fileID: 129538, guid: 852f11a8154df194e9376a9df0a87433, type: 3}
   smallEnemyBullet: {fileID: 3202969236751210887, guid: c48bea3f7db95644eb053aa7b0372a65, type: 3}
-  minReloadTime: 1
-  maxReloadTime: 2
+  minReloadTime: 0.7
+  maxReloadTime: 1
 --- !u!114 &5545057310916404332
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -152,4 +155,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dddf02375070b5346a8ec9fa0573b0c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 3
+  moveSpeed: 4
