@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Bullet : MonoBehaviour
+public class BulletPlayer : MonoBehaviour
 {
     //Bulletworks
     public Vector2 direction = new Vector2(1, 0);

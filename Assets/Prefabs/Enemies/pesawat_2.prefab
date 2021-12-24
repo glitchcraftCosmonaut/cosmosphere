@@ -142,7 +142,7 @@ MonoBehaviour:
   explosion: {fileID: 129538, guid: 852f11a8154df194e9376a9df0a87433, type: 3}
   smallEnemyBullet: {fileID: 3202969236751210887, guid: c48bea3f7db95644eb053aa7b0372a65, type: 3}
   minReloadTime: 0.7
-  maxReloadTime: 1
+  maxReloadTime: 0.9
 --- !u!114 &5545057310916404332
 MonoBehaviour:
   m_ObjectHideFlags: 0
