@@ -13,6 +13,13 @@ TagManager:
   - ShieldPowerup
   - Enemy Ship 3
   - Health Pickup
+  - Enemy
+  - EnemyBullet
+  - Collectable
+  - PlayerBullet
+  - Boss
+  - CollectableTriggerZone
+  - BulletTriggerZone
   layers:
   - Default
   - TransparentFX
@@ -22,19 +29,19 @@ TagManager:
   - UI
   - 
   - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Player
+  - Enemy
+  - EnemyBullet
+  - PlayerBullet
+  - Effects
+  - PlayerBorder
+  - BulletBorder
+  - EnemyBorder
+  - BulletTriggerZone
+  - Boss
+  - Collectable
+  - CollectableTriggerZone
+  - CollectableBorder
   - 
   - 
   - 

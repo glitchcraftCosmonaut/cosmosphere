@@ -6,12 +6,12 @@ using DanmakU;
 
 public class PlayerCollision : MonoBehaviour
 {
-    Player player;
+    PlayerMech player;
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<DanmakuCollider>().OnDanmakuCollision += OnDanmakuCollision;
-        player = GetComponent<Player>();
+        player = GetComponent<PlayerMech>();
     }
 
     void OnDanmakuCollision(DanmakuCollisionList collisionList)

@@ -7,11 +7,11 @@ public class BossTest : MonoBehaviour
     [SerializeField] Transform[] bossWaypoint;
     [SerializeField] int randomWaypoint;
     [SerializeField] float bossSpeed;
-    Player player;
+    PlayerMech player;
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.Find("Player").GetComponent<Player>();
+        player = GameObject.Find("Player").GetComponent<PlayerMech>();
         if(player == null)
         {
             Debug.LogError("The player is null");
