@@ -4,6 +4,8 @@ using UnityEngine;
 public class PoolManager : MonoBehaviour
 {
     [SerializeField] Pool[] playerProjectilesPool;
+    [SerializeField] Pool[] enemyProjectilesPool;
+
 
     static Dictionary<GameObject, Pool> dictionary;
 
@@ -12,11 +14,15 @@ public class PoolManager : MonoBehaviour
     {
         dictionary = new Dictionary<GameObject, Pool>();
         Initialize(playerProjectilesPool);
+        Initialize(enemyProjectilesPool);
+
     }
 
     private void OnDestroy()
     {
         CheckPoolSize(playerProjectilesPool);
+        CheckPoolSize(enemyProjectilesPool);
+
     }
 
     void CheckPoolSize(Pool[] pools)

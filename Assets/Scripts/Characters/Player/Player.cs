@@ -3,17 +3,29 @@ using UnityEngine;
 
 
 [RequireComponent(typeof(Rigidbody2D))]
-public class Player : MonoBehaviour
+public class Player : Character
 {
+    #region  health System
+    // [Header("HEALTH SYSTEM")]
+    [SerializeField] bool regenerateHealth = true;
+    [SerializeField] float healthRegenerateTime;
+    [SerializeField] float healthRegeneratePercent;
+    #endregion
+
+    [Header("INPUT")]
     [SerializeField] PlayerInput input;
 
+    #region movement
+    [Header("MOVEMENT")]
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float accelerationTime = 3f;
     [SerializeField] float deccelerationTime = 3f;
     [SerializeField] float paddingX = 0.2f;
     [SerializeField] float paddingY = 0.2f;
+    #endregion
 
     #region Firing Variables
+    [Header("FIRING")]
     [SerializeField] GameObject projectile1;
     [SerializeField] GameObject projectile2;
     [SerializeField] GameObject projectile3;
@@ -26,12 +38,13 @@ public class Player : MonoBehaviour
     [SerializeField, Range(0, 2)] int weaponPower = 0;
     [SerializeField] float fireInterval = 0.2f;
     WaitForSeconds waitForFireInterval;
-
     #endregion
+    WaitForSeconds waitHealthRegenerateTime;
 
     Rigidbody2D playerRigidbody;
 
     Coroutine moveCoroutine;
+    Coroutine healthRegenerateCoroutine;
 
 
     private void Awake() 
@@ -39,8 +52,9 @@ public class Player : MonoBehaviour
         playerRigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void OnEnable() 
+    protected override void OnEnable() 
     {
+        base.OnEnable();
         input.onMove += Move;    
         input.onStopMove += StopMove;
         input.onFire += Fire;
@@ -61,8 +75,25 @@ public class Player : MonoBehaviour
         playerRigidbody.gravityScale = 0;
 
         waitForFireInterval = new WaitForSeconds(fireInterval);
+        waitHealthRegenerateTime = new WaitForSeconds(healthRegenerateTime);
 
         input.EnableGameplayInput();
+    }
+
+    public override void TakeDamage(float damage)
+    {
+        base.TakeDamage(damage);
+        if(gameObject.activeSelf)
+        {
+            if(regenerateHealth)
+            {
+                if(healthRegenerateCoroutine != null)
+                {
+                    StopCoroutine(healthRegenerateCoroutine);
+                }
+                healthRegenerateCoroutine = StartCoroutine(HealthRegenerationCoroutine(waitHealthRegenerateTime, healthRegeneratePercent));
+            }
+        }
     }
 
     #region MOVE

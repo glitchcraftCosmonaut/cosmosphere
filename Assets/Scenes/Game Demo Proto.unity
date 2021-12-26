@@ -1208,6 +1208,9 @@ MonoBehaviour:
     size: 20
   - prefab: {fileID: 6323778518288546903, guid: 2e27d77e4f3c9fc42b8b3289bdbe5fa6, type: 3}
     size: 20
+  enemyProjectilesPool:
+  - prefab: {fileID: 1886703243126500656, guid: 935be4f19f7b2614dba8568bc3229cf9, type: 3}
+    size: 20
 --- !u!4 &1330283356
 Transform:
   m_ObjectHideFlags: 0
@@ -1844,6 +1847,36 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
+--- !u!1 &2020756793
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2020756794}
+  m_Layer: 17
+  m_Name: Turret
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2020756794
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2020756793}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -1.066, y: 0.21, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4598329563044553529}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2069908711
 GameObject:
   m_ObjectHideFlags: 0
@@ -1936,7 +1969,8 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 6.94, y: -0.025696754, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 2020756794}
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2003,6 +2037,7 @@ GameObject:
   - component: {fileID: 4598329563044553530}
   - component: {fileID: 4598329563044553533}
   - component: {fileID: 4598329563044553534}
+  - component: {fileID: 4598329563044553532}
   m_Layer: 17
   m_Name: Enemy_Mech
   m_TagString: Enemy Ship 3
@@ -2010,6 +2045,26 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &4598329563044553532
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4598329563044553531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c0b47c3124673b4d9a711915445ad43, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  paddingX: 0.8
+  paddingY: 0.4
+  moveSpeed: 2
+  projectiles:
+  - {fileID: 1886703243126500656, guid: 935be4f19f7b2614dba8568bc3229cf9, type: 3}
+  muzzle: {fileID: 2020756794}
+  minFireInterval: 0.5
+  maxFireInterval: 3
 --- !u!50 &4598329563044553533
 Rigidbody2D:
   serializedVersion: 4

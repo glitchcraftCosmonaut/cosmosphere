@@ -6,7 +6,7 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 10f;
 
-    [SerializeField] Vector2 moveDirection;
+    [SerializeField] protected Vector2 moveDirection;
 
     private void OnEnable() 
     {
