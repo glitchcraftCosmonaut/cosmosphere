@@ -7,9 +7,10 @@ public class Player : Character
 {
     #region  health System
     // [Header("HEALTH SYSTEM")]
+    [SerializeField] Statsbar_HUD statsbar_HUD;
     [SerializeField] bool regenerateHealth = true;
     [SerializeField] float healthRegenerateTime;
-    [SerializeField] float healthRegeneratePercent;
+    [SerializeField,Range(0f, 1f)] float healthRegeneratePercent;
     #endregion
 
     [Header("INPUT")]
@@ -76,13 +77,27 @@ public class Player : Character
 
         waitForFireInterval = new WaitForSeconds(fireInterval);
         waitHealthRegenerateTime = new WaitForSeconds(healthRegenerateTime);
+        statsbar_HUD.Initialize(health,maxHealth);
 
         input.EnableGameplayInput();
+    }
+
+    public override void RestoreHealth(float value)
+    {
+        base.RestoreHealth(value);
+        statsbar_HUD.UpdateStates(health, maxHealth);
+    }
+
+    public override void Die()
+    {
+        statsbar_HUD.UpdateStates(0f, maxHealth);
+        base.Die();
     }
 
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+        statsbar_HUD.UpdateStates(health, maxHealth);
         if(gameObject.activeSelf)
         {
             if(regenerateHealth)
@@ -182,4 +197,6 @@ public class Player : Character
         }
     }
     #endregion
+
+
 }

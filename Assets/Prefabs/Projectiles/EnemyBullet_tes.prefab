@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1886703241323744722}
   - component: {fileID: 1886703241323744721}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: EnemyBullet1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -71,8 +71,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cecea3407896a0143a639c011226f602, type: 3}
-  m_Color: {r: 0.6737287, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 2470114695245739177, guid: af37bb9e886d0544f9677473bbb1216c, type: 3}
+  m_Color: {r: 1, g: 0.045656387, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -93,7 +93,8 @@ GameObject:
   - component: {fileID: 1886703243126500658}
   - component: {fileID: 1886703243126500657}
   - component: {fileID: 1536781779790042035}
-  m_Layer: 0
+  - component: {fileID: 7569662269434562416}
+  m_Layer: 10
   m_Name: EnemyBullet_tes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -141,5 +142,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fae16945a7bcee489c29f022ca48754, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
+  damage: 1
   moveSpeed: 10
   moveDirection: {x: -1, y: 0}
+--- !u!70 &7569662269434562416
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1886703243126500656}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.0056373184, y: 0.0028189728}
+  m_Size: {x: 0.68431395, y: 0.13749573}
+  m_Direction: 1

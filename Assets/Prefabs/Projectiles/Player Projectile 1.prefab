@@ -11,7 +11,8 @@ GameObject:
   - component: {fileID: 6323778518288546900}
   - component: {fileID: 6323778518288546901}
   - component: {fileID: 2522582984942537986}
-  m_Layer: 0
+  - component: {fileID: 8409810079053051121}
+  m_Layer: 11
   m_Name: Player Projectile 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -46,6 +47,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 55d524d88a125c44d813001ab4537706, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hitVFX: {fileID: 5060298685065931927, guid: 6775c68a79b34db4fa2fd4db2a4cdf74, type: 3}
+  damage: 1
   moveSpeed: 10
   moveDirection: {x: 1, y: 0.05}
 --- !u!114 &2522582984942537986
@@ -62,6 +65,22 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyGameObject: 0
   lifeTime: 3
+--- !u!70 &8409810079053051121
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6323778518288546903}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.02050397, y: -0.004003915}
+  m_Size: {x: 0.32445672, y: 0.13662736}
+  m_Direction: 1
 --- !u!1 &6323778518752316463
 GameObject:
   m_ObjectHideFlags: 0
@@ -73,7 +92,7 @@ GameObject:
   - component: {fileID: 6323778518752316460}
   - component: {fileID: 6323778518752316458}
   - component: {fileID: 6323778518752316461}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Particle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4876,7 +4895,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6323778519209766409}
   - component: {fileID: 6323778519209766406}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
