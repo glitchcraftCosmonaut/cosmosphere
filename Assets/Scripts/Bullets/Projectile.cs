@@ -5,6 +5,7 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] GameObject hitVFX;
+    [SerializeField] AudioData[] hitSFX;
     [SerializeField] float damage;
     [SerializeField] float moveSpeed = 10f;
 
@@ -14,19 +15,10 @@ public class Projectile : MonoBehaviour
 
     protected virtual void OnEnable() 
     {
-        StartCoroutine(MoveDirectly());
-    }
-    IEnumerator MoveDirectly()
-    {
-        while(gameObject.activeSelf)
-        {
-            transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
-
-            yield return null;
-        }
+        StartCoroutine(MoveDirectlyCoroutine());
     }
     
-    private void OnCollisionEnter2D(Collision2D collision)
+    public virtual void OnCollisionEnter2D(Collision2D collision)
     {
         if(collision.gameObject.TryGetComponent<Character>(out Character character))
         {
@@ -34,7 +26,20 @@ public class Projectile : MonoBehaviour
 
             // var contactPoint = collision.GetContact(0);
             PoolManager.Release(hitVFX, collision.GetContact(0).point, Quaternion.LookRotation(collision.GetContact(0).normal));
+            AudioManager.Instance.PlayRandomSFX(hitSFX);
             gameObject.SetActive(false);
         }
     }
+    IEnumerator MoveDirectlyCoroutine()
+    {
+        while(gameObject.activeSelf)
+        {
+            Move();
+            yield return null;
+        }
+    }
+
+    protected void SetTarget(GameObject target) => this.target = target;
+
+    public void Move() => transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
 }

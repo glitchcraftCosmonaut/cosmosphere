@@ -5,16 +5,30 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
     [Header("MOVEMENT")]
-    [SerializeField] float paddingX;
-    [SerializeField] float paddingY;
+    
     [SerializeField] float moveSpeed = 2f;
     // [SerializeField] float moveRotationAngle;
 
     [Header("FIRING")]
     [SerializeField] GameObject[] projectiles;
+    [SerializeField] AudioData[] projectileLaunchSFX;
     [SerializeField] Transform muzzle;
     [SerializeField] float minFireInterval;
     [SerializeField] float maxFireInterval;
+
+    float paddingX;
+    float paddingY;
+
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
+    private void Awake() 
+    {
+        var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
+
+        paddingX = size.x / 2f;
+        paddingY = size.y / 2f;
+    }
+
     private void OnEnable() 
     {
         StartCoroutine(nameof(RandomlyMovingCoroutine));
@@ -26,6 +40,7 @@ public class EnemyController : MonoBehaviour
         StopAllCoroutines();
     }
 
+
     IEnumerator RandomlyMovingCoroutine()
     {
         transform.position = Viewport.Instance.RandomEnemySpawnPosition(paddingX, paddingY);
@@ -35,10 +50,10 @@ public class EnemyController : MonoBehaviour
         while(gameObject.activeSelf)
         {
             //if not has arrive at location
-            if(Vector3.Distance(transform.position, targetPosition) > Mathf.Epsilon)
+            if(Vector3.Distance(transform.position, targetPosition) >= moveSpeed * Time.fixedDeltaTime)
             {
                 //keep moving to target position
-                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+                transform.position = Vector3.MoveTowards(transform.position, targetPosition, moveSpeed * Time.fixedDeltaTime);
                 //make enemy rotate with x axis while moving
                 // transform.rotation = Quaternion.AngleAxis((targetPosition - transform.position).normalized.y * moveRotationAngle, Vector3.right);
             }
@@ -48,7 +63,7 @@ public class EnemyController : MonoBehaviour
                 targetPosition = Viewport.Instance.RandomRighHalfPosition(paddingX, paddingY);
             }
 
-            yield return null;
+            yield return waitForFixedUpdate;
 
         }
     }
@@ -63,6 +78,7 @@ public class EnemyController : MonoBehaviour
             {
                 PoolManager.Release(projectile, muzzle.position);
             }
+            AudioManager.Instance.PlayRandomSFX(projectileLaunchSFX);
         }
     }
 }

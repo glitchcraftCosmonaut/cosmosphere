@@ -143,7 +143,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
-  damage: 1
+  hitSFX:
+  - audioClip: {fileID: 8300000, guid: 2e071f5b8b8467d45a5e6e24c23c6ad4, type: 3}
+    volume: 1
+  - audioClip: {fileID: 8300000, guid: 958408b32ccf3714ea02821877b0870c, type: 3}
+    volume: 1
+  damage: 10
   moveSpeed: 10
   moveDirection: {x: -1, y: 0}
 --- !u!70 &7569662269434562416

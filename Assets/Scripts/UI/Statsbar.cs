@@ -11,6 +11,7 @@ public class Statsbar : MonoBehaviour
     [SerializeField] float fillSpeed = 0.1f;
     float currentFillAmount;
     protected float targetFillAmount;
+    float previousFillAmount;
     float t;
 
     WaitForSeconds waitForDelayFill;
@@ -18,9 +19,12 @@ public class Statsbar : MonoBehaviour
     Coroutine bufferedFillCoroutine;
     Canvas canvas;
 
-    private void Awake() {
-        canvas = GetComponent<Canvas>();
-        canvas.worldCamera = Camera.main;
+    private void Awake() 
+    {
+        if(TryGetComponent<Canvas>(out Canvas canvas))
+        {
+            canvas.worldCamera = Camera.main;
+        }
 
         waitForDelayFill = new WaitForSeconds(fillDelay);
     }
@@ -47,6 +51,8 @@ public class Statsbar : MonoBehaviour
             fillImageFront.fillAmount = targetFillAmount;
 
             bufferedFillCoroutine = StartCoroutine(BufferedFillingCoroutine(fillImageBack));
+
+            return;
         }
 
         if(currentFillAmount < targetFillAmount)
@@ -63,11 +69,12 @@ public class Statsbar : MonoBehaviour
         {
             yield return waitForDelayFill;
         }
+        previousFillAmount = currentFillAmount;
         t = 0f;
         while(t < 1f)
         {
             t += Time.deltaTime * fillSpeed;
-            currentFillAmount = Mathf.Lerp(currentFillAmount, targetFillAmount, t);
+            currentFillAmount = Mathf.Lerp(previousFillAmount, targetFillAmount, t);
             image.fillAmount = currentFillAmount;
 
             yield return null;

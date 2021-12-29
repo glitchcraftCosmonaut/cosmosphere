@@ -21,8 +21,7 @@ public class Player : Character
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] float accelerationTime = 3f;
     [SerializeField] float deccelerationTime = 3f;
-    [SerializeField] float paddingX = 0.2f;
-    [SerializeField] float paddingY = 0.2f;
+    
     #endregion
 
     #region Firing Variables
@@ -30,19 +29,38 @@ public class Player : Character
     [SerializeField] GameObject projectile1;
     [SerializeField] GameObject projectile2;
     [SerializeField] GameObject projectile3;
+    [SerializeField] GameObject projectileOverdrive;
 
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleTop;
     [SerializeField] Transform muzzleBottom;
 
+    [SerializeField] AudioData projectileLaunchSFX;
+
 
     [SerializeField, Range(0, 2)] int weaponPower = 0;
     [SerializeField] float fireInterval = 0.2f;
+
     WaitForSeconds waitForFireInterval;
     #endregion
+    WaitForSeconds waitForOverdriveFireInterval;
     WaitForSeconds waitHealthRegenerateTime;
+    WaitForSeconds waitForDeccelerationTime;
+    WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
+
+    [Header("OVERDRIVING")]
+    [SerializeField] float overDriveSpeedFactor = 1.2f;
+    [SerializeField] float overDriveFireFactor = 1.2f;
+    bool isOverdriving = false;
 
     Rigidbody2D playerRigidbody;
+
+    float t;
+    Vector2 previousVelocity;
+    readonly float slowMotionDuration = 1f;
+    float paddingX;
+    float paddingY;
+
 
     Coroutine moveCoroutine;
     Coroutine healthRegenerateCoroutine;
@@ -51,6 +69,17 @@ public class Player : Character
     private void Awake() 
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
+        playerRigidbody.gravityScale = 0;
+
+        var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
+
+        paddingX = size.x / 3f;
+        paddingY = size.y / 3f;
+
+        waitForFireInterval = new WaitForSeconds(fireInterval);
+        waitForOverdriveFireInterval = new WaitForSeconds(fireInterval / overDriveFireFactor);
+        waitHealthRegenerateTime = new WaitForSeconds(healthRegenerateTime);
+        waitForDeccelerationTime = new WaitForSeconds(deccelerationTime);
     }
 
     protected override void OnEnable() 
@@ -60,6 +89,10 @@ public class Player : Character
         input.onStopMove += StopMove;
         input.onFire += Fire;
         input.onStopFire += StopFire;
+        input.onOverdrive += Overdrive;
+
+        PlayerOverdrive.on += OverdriveOn;
+        PlayerOverdrive.off += OverdriveOff;
     }
 
     private void OnDisable()
@@ -68,15 +101,16 @@ public class Player : Character
         input.onStopMove -= StopMove;
         input.onFire -= Fire;
         input.onStopFire -= StopFire;
+        input.onOverdrive -= Overdrive;
+
+        PlayerOverdrive.on -= OverdriveOn;
+        PlayerOverdrive.off -= OverdriveOff;
 
     }
     // Start is called before the first frame update
     void Start()
     {
-        playerRigidbody.gravityScale = 0;
-
-        waitForFireInterval = new WaitForSeconds(fireInterval);
-        waitHealthRegenerateTime = new WaitForSeconds(healthRegenerateTime);
+        
         statsbar_HUD.Initialize(health,maxHealth);
 
         input.EnableGameplayInput();
@@ -98,6 +132,7 @@ public class Player : Character
     {
         base.TakeDamage(damage);
         statsbar_HUD.UpdateStates(health, maxHealth);
+        TimeController.Instance.BulletTime(slowMotionDuration);
         if(gameObject.activeSelf)
         {
             if(regenerateHealth)
@@ -119,8 +154,9 @@ public class Player : Character
             StopCoroutine(moveCoroutine);
         }
         moveCoroutine =  StartCoroutine(MoveCoroutine(accelerationTime ,moveInput.normalized * moveSpeed));
+        StopCoroutine(nameof(DeccelerationCoroutine));
 
-        StartCoroutine(MovePositionLimitCoroutine());
+        StartCoroutine(nameof(MovePositionLimitCoroutine));
     }
 
     void StopMove()
@@ -130,22 +166,24 @@ public class Player : Character
             StopCoroutine(moveCoroutine);
         }
         moveCoroutine = StartCoroutine(MoveCoroutine(deccelerationTime, Vector2.zero));
-        StopCoroutine(MovePositionLimitCoroutine());
+        StartCoroutine(nameof(DeccelerationCoroutine));
     }
 
     IEnumerator MoveCoroutine(float time, Vector2 moveVelocity)
     {
-        float t = 0f;
+        t = 0f;
+        previousVelocity = playerRigidbody.velocity;
+        // Quaternion previousRotation = transform.rotation
 
         while(t < time)
         {
             t += Time.fixedDeltaTime / time;
-            playerRigidbody.velocity = Vector2.Lerp(playerRigidbody.velocity, moveVelocity, t/time);
+            playerRigidbody.velocity = Vector2.Lerp(previousVelocity, moveVelocity, t/time);
 
             //add moverotation variable in ienumerator
-            // transform.rotation = Quaternion.Lerp(transform.rotation, moveRotation, t/time);
+            // transform.rotation = Quaternion.Lerp(previousRotation, moveRotation, t/time);
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
     }
 
@@ -157,6 +195,12 @@ public class Player : Character
 
             yield return null;
         }
+    }
+
+    IEnumerator DeccelerationCoroutine()
+    {
+        yield return waitForDeccelerationTime;
+        StopCoroutine(nameof(MovePositionLimitCoroutine));
     }
     #endregion
 
@@ -178,25 +222,50 @@ public class Player : Character
             switch(weaponPower)
             {
                 case 0:
-                    PoolManager.Release(projectile1, muzzleMiddle.position, Quaternion.identity);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleMiddle.position, Quaternion.identity);
                     break;
                 case 1:
-                    PoolManager.Release(projectile1, muzzleTop.position, Quaternion.identity);
-                    PoolManager.Release(projectile1, muzzleBottom.position, Quaternion.identity);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleTop.position, Quaternion.identity);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleBottom.position, Quaternion.identity);
                     break;
                 case 2:
-                    PoolManager.Release(projectile1, muzzleMiddle.position, Quaternion.identity);
-                    PoolManager.Release(projectile2, muzzleTop.position, Quaternion.identity);
-                    PoolManager.Release(projectile3, muzzleBottom.position, Quaternion.identity);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile1, muzzleMiddle.position, Quaternion.identity);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile2, muzzleTop.position, Quaternion.identity);
+                    PoolManager.Release(isOverdriving ? projectileOverdrive : projectile3, muzzleBottom.position, Quaternion.identity);
                     break;
                 default:
                 break;
             }
 
-            yield return waitForFireInterval;
+            AudioManager.Instance.PlayRandomSFX(projectileLaunchSFX);
+            yield return isOverdriving ? waitForOverdriveFireInterval : waitForFireInterval;
+            
         }
     }
     #endregion
 
+    #region OVERDRIVE
+    void Overdrive()
+    {
+        if(!PlayerEnergy.Instance.IsEnough(PlayerEnergy.MAX)) return;
+
+        PlayerOverdrive.on.Invoke();
+    }
+
+    void OverdriveOn()
+    {
+        isOverdriving = true;
+        moveSpeed *= overDriveSpeedFactor;
+        TimeController.Instance.BulletTime(slowMotionDuration, slowMotionDuration);
+    }
+
+    void OverdriveOff()
+    {
+        isOverdriving = false;
+        moveSpeed /= overDriveSpeedFactor;
+
+    }
+
+    #endregion
 
 }
