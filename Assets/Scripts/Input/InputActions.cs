@@ -49,6 +49,14 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Launch Missile"",
+                    ""type"": ""Button"",
+                    ""id"": ""88c1d6d0-2546-4d65-8e46-03c88db6a686"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -249,6 +257,28 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3fe1e21c-e27d-428c-95b9-b816d1c3a404"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Launch Missile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""31cd129a-addd-4727-9efb-318f7538cd69"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""Launch Missile"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         },
@@ -289,6 +319,44 @@ public class @InputActions : IInputActionCollection, IDisposable
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""GameOverScreen"",
+            ""id"": ""e6cf36a4-a197-49f8-9807-f116eb30eaae"",
+            ""actions"": [
+                {
+                    ""name"": ""ConfirmGameOver"",
+                    ""type"": ""Button"",
+                    ""id"": ""563d0a73-e180-4f0f-9e41-f817b8113d2c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""2ba08c47-8c1f-40f8-9de2-3895d68452c9"",
+                    ""path"": ""<Keyboard>/anyKey"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ConfirmGameOver"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""ba50417e-a1c0-405a-a2c6-8698e5215608"",
+                    ""path"": ""<Gamepad>/start"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""PC"",
+                    ""action"": ""ConfirmGameOver"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -321,9 +389,13 @@ public class @InputActions : IInputActionCollection, IDisposable
         m_Gameplay_Fire = m_Gameplay.FindAction("Fire", throwIfNotFound: true);
         m_Gameplay_Overdrive = m_Gameplay.FindAction("Overdrive", throwIfNotFound: true);
         m_Gameplay_Pause = m_Gameplay.FindAction("Pause", throwIfNotFound: true);
+        m_Gameplay_LaunchMissile = m_Gameplay.FindAction("Launch Missile", throwIfNotFound: true);
         // PauseMenu
         m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
         m_PauseMenu_Unpause = m_PauseMenu.FindAction("Unpause", throwIfNotFound: true);
+        // GameOverScreen
+        m_GameOverScreen = asset.FindActionMap("GameOverScreen", throwIfNotFound: true);
+        m_GameOverScreen_ConfirmGameOver = m_GameOverScreen.FindAction("ConfirmGameOver", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -377,6 +449,7 @@ public class @InputActions : IInputActionCollection, IDisposable
     private readonly InputAction m_Gameplay_Fire;
     private readonly InputAction m_Gameplay_Overdrive;
     private readonly InputAction m_Gameplay_Pause;
+    private readonly InputAction m_Gameplay_LaunchMissile;
     public struct GameplayActions
     {
         private @InputActions m_Wrapper;
@@ -385,6 +458,7 @@ public class @InputActions : IInputActionCollection, IDisposable
         public InputAction @Fire => m_Wrapper.m_Gameplay_Fire;
         public InputAction @Overdrive => m_Wrapper.m_Gameplay_Overdrive;
         public InputAction @Pause => m_Wrapper.m_Gameplay_Pause;
+        public InputAction @LaunchMissile => m_Wrapper.m_Gameplay_LaunchMissile;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -406,6 +480,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Pause.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
                 @Pause.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnPause;
+                @LaunchMissile.started -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLaunchMissile;
+                @LaunchMissile.performed -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLaunchMissile;
+                @LaunchMissile.canceled -= m_Wrapper.m_GameplayActionsCallbackInterface.OnLaunchMissile;
             }
             m_Wrapper.m_GameplayActionsCallbackInterface = instance;
             if (instance != null)
@@ -422,6 +499,9 @@ public class @InputActions : IInputActionCollection, IDisposable
                 @Pause.started += instance.OnPause;
                 @Pause.performed += instance.OnPause;
                 @Pause.canceled += instance.OnPause;
+                @LaunchMissile.started += instance.OnLaunchMissile;
+                @LaunchMissile.performed += instance.OnLaunchMissile;
+                @LaunchMissile.canceled += instance.OnLaunchMissile;
             }
         }
     }
@@ -459,6 +539,39 @@ public class @InputActions : IInputActionCollection, IDisposable
         }
     }
     public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
+
+    // GameOverScreen
+    private readonly InputActionMap m_GameOverScreen;
+    private IGameOverScreenActions m_GameOverScreenActionsCallbackInterface;
+    private readonly InputAction m_GameOverScreen_ConfirmGameOver;
+    public struct GameOverScreenActions
+    {
+        private @InputActions m_Wrapper;
+        public GameOverScreenActions(@InputActions wrapper) { m_Wrapper = wrapper; }
+        public InputAction @ConfirmGameOver => m_Wrapper.m_GameOverScreen_ConfirmGameOver;
+        public InputActionMap Get() { return m_Wrapper.m_GameOverScreen; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(GameOverScreenActions set) { return set.Get(); }
+        public void SetCallbacks(IGameOverScreenActions instance)
+        {
+            if (m_Wrapper.m_GameOverScreenActionsCallbackInterface != null)
+            {
+                @ConfirmGameOver.started -= m_Wrapper.m_GameOverScreenActionsCallbackInterface.OnConfirmGameOver;
+                @ConfirmGameOver.performed -= m_Wrapper.m_GameOverScreenActionsCallbackInterface.OnConfirmGameOver;
+                @ConfirmGameOver.canceled -= m_Wrapper.m_GameOverScreenActionsCallbackInterface.OnConfirmGameOver;
+            }
+            m_Wrapper.m_GameOverScreenActionsCallbackInterface = instance;
+            if (instance != null)
+            {
+                @ConfirmGameOver.started += instance.OnConfirmGameOver;
+                @ConfirmGameOver.performed += instance.OnConfirmGameOver;
+                @ConfirmGameOver.canceled += instance.OnConfirmGameOver;
+            }
+        }
+    }
+    public GameOverScreenActions @GameOverScreen => new GameOverScreenActions(this);
     private int m_PCSchemeIndex = -1;
     public InputControlScheme PCScheme
     {
@@ -474,9 +587,14 @@ public class @InputActions : IInputActionCollection, IDisposable
         void OnFire(InputAction.CallbackContext context);
         void OnOverdrive(InputAction.CallbackContext context);
         void OnPause(InputAction.CallbackContext context);
+        void OnLaunchMissile(InputAction.CallbackContext context);
     }
     public interface IPauseMenuActions
     {
         void OnUnpause(InputAction.CallbackContext context);
+    }
+    public interface IGameOverScreenActions
+    {
+        void OnConfirmGameOver(InputAction.CallbackContext context);
     }
 }

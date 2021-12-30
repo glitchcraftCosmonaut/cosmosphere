@@ -1,29 +1,52 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class MainMenuUIController : MonoBehaviour
 {
-    [SerializeField] Button buttonStartGame;
+    [Header("Canvas")]
+    [SerializeField] Canvas mainMenuCanvas;
+
+    [Header("Button")]
+    [SerializeField] Button buttonStart;
+    [SerializeField] Button buttonOption;
+    [SerializeField] Button buttonQuit;
 
 
     private void OnEnable()
     {
-        buttonStartGame.onClick.AddListener(OnStartGameButtonClick);
+        ButtonPressedBehavior.buttonFunctionTable.Add(buttonStart.gameObject.name, OnButtonStartClick);
+        ButtonPressedBehavior.buttonFunctionTable.Add(buttonOption.gameObject.name, OnButtonOptionClick);
+        ButtonPressedBehavior.buttonFunctionTable.Add(buttonQuit.gameObject.name, OnButtonQuitClick);
     }
 
     private void OnDisable()
     {
-        buttonStartGame.onClick.RemoveAllListeners();
+        ButtonPressedBehavior.buttonFunctionTable.Clear();
     }
 
     void Start()
     {
         Time.timeScale = 1f;
+        GameManager.GameState = GameState.Playing;
+        UIInput.Instance.SelectUI(buttonStart);
     }
-    void OnStartGameButtonClick()
+    void OnButtonStartClick()
     {
+        mainMenuCanvas.enabled = false;
         SceneLoader.Instance.LoadGamePlayScene();
+    }
+
+    void OnButtonOptionClick()
+    {
+        UIInput.Instance.SelectUI(buttonOption);
+    }
+
+    void OnButtonQuitClick()
+    {
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+            Application.Quit();
+        #endif
     }
 }

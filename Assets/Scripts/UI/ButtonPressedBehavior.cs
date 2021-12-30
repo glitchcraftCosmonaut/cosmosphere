@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ButtonPressed : StateMachineBehaviour
+public class ButtonPressedBehavior : StateMachineBehaviour
 {
     public static Dictionary<string, System.Action> buttonFunctionTable;
 

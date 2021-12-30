@@ -15,10 +15,7 @@ public class ScoreDisplay : MonoBehaviour
         ScoreManager.Instance.ResetScore();
     }
 
-    public static void UpdateText(int score)
-    {
-        scoreText.text = score.ToString();
-    }
+    public static void UpdateText(int score) => scoreText.text = score.ToString();
 
     public static void ScaleText(Vector3 targetScale)
     {

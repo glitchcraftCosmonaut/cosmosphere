@@ -55,6 +55,8 @@ public class Player : Character
 
     Rigidbody2D playerRigidbody;
 
+    MissileSystem missile;
+
     float t;
     Vector2 previousVelocity;
     readonly float slowMotionDuration = 1f;
@@ -69,6 +71,7 @@ public class Player : Character
     private void Awake() 
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
+        missile = GetComponent<MissileSystem>();
         playerRigidbody.gravityScale = 0;
 
         var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
@@ -90,6 +93,7 @@ public class Player : Character
         input.onFire += Fire;
         input.onStopFire += StopFire;
         input.onOverdrive += Overdrive;
+        input.onLaunchMissile += LaunchMissile;
 
         PlayerOverdrive.on += OverdriveOn;
         PlayerOverdrive.off += OverdriveOff;
@@ -102,6 +106,8 @@ public class Player : Character
         input.onFire -= Fire;
         input.onStopFire -= StopFire;
         input.onOverdrive -= Overdrive;
+        input.onLaunchMissile -= LaunchMissile;
+
 
         PlayerOverdrive.on -= OverdriveOn;
         PlayerOverdrive.off -= OverdriveOff;
@@ -124,6 +130,8 @@ public class Player : Character
 
     public override void Die()
     {
+        GameManager.onGameOver?.Invoke();
+        GameManager.GameState = GameState.GameOver;
         statsbar_HUD.UpdateStates(0f, maxHealth);
         base.Die();
     }
@@ -268,4 +276,8 @@ public class Player : Character
 
     #endregion
 
+    void LaunchMissile()
+    {
+        missile.Launch(muzzleMiddle);
+    }
 }

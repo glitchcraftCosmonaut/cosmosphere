@@ -4,14 +4,27 @@ using UnityEngine;
 
 public class TimeController : Singleton<TimeController>
 {
-    [SerializeField, Range(0f, 1f)] float bulletTimeScale = 0.1f; 
+    [SerializeField, Range(0f, 1f)] float bulletTimeScale = 0.1f;
+
     float defaultFixedDeltaTime;
+    float timeScaleBeforePause;
     float t;
 
     protected override void Awake()
     {
         base.Awake();
         defaultFixedDeltaTime = Time.fixedDeltaTime;
+    }
+
+    public void Pause()
+    {
+        timeScaleBeforePause = Time.timeScale;
+        Time.timeScale = 0f;
+    }
+
+    public void Unpause()
+    {
+        Time.timeScale = timeScaleBeforePause;
     }
     public void BulletTime(float duration)
     {
@@ -59,9 +72,12 @@ public class TimeController : Singleton<TimeController>
 
         while(t < 1f)
         {
-            t += Time.deltaTime / duration;
-            Time.timeScale = Mathf.Lerp(bulletTimeScale, 1f, t);
-            Time.fixedDeltaTime = defaultFixedDeltaTime * Time.timeScale;
+            if(GameManager.GameState != GameState.Paused)
+            {
+                t += Time.deltaTime / duration;
+                Time.timeScale = Mathf.Lerp(bulletTimeScale, 1f, t);
+                Time.fixedDeltaTime = defaultFixedDeltaTime * Time.timeScale;
+            }
 
             yield return null;
         }
@@ -73,9 +89,12 @@ public class TimeController : Singleton<TimeController>
 
         while(t < 1f)
         {
-            t += Time.deltaTime / duration;
-            Time.timeScale = Mathf.Lerp(bulletTimeScale, 1f, t);
-            Time.fixedDeltaTime = defaultFixedDeltaTime * Time.timeScale;
+            if(GameManager.GameState != GameState.Paused)
+            {
+                t += Time.deltaTime / duration;
+                Time.timeScale = Mathf.Lerp(bulletTimeScale, 1f, t);
+                Time.fixedDeltaTime = defaultFixedDeltaTime * Time.timeScale;
+            }
 
             yield return null;
         }
