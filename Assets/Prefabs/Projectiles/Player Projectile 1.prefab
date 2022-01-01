@@ -56,7 +56,7 @@ MonoBehaviour:
   - audioClip: {fileID: 8300000, guid: bb6cdd13aeb95f743847b1cd460889bc, type: 3}
     volume: 1
   damage: 1
-  moveSpeed: 10
+  moveSpeed: 18
   moveDirection: {x: 1, y: 0.05}
 --- !u!114 &2522582984942537986
 MonoBehaviour:

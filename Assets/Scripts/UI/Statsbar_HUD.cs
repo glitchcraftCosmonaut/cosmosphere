@@ -5,9 +5,9 @@ using UnityEngine.UI;
 
 public class Statsbar_HUD : Statsbar
 {
-    [SerializeField] Text percentText;
+    [SerializeField] protected Text percentText;
     
-    void SetPercentText()
+    protected virtual void SetPercentText()
     {
         percentText.text = Mathf.RoundToInt(targetFillAmount * 100f) + "%";
     }

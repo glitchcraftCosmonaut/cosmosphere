@@ -17,6 +17,7 @@ public class Character : MonoBehaviour
     }
     public virtual void TakeDamage(float damage)
     {
+        if(health == 0f) return;
         health -= damage;
         if(health <= 0)
         {

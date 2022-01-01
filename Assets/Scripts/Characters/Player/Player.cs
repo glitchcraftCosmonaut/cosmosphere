@@ -30,6 +30,7 @@ public class Player : Character
     [SerializeField] GameObject projectile2;
     [SerializeField] GameObject projectile3;
     [SerializeField] GameObject projectileOverdrive;
+    [SerializeField] ParticleSystem muzzleVFX;
 
     [SerializeField] Transform muzzleMiddle;
     [SerializeField] Transform muzzleTop;
@@ -46,6 +47,7 @@ public class Player : Character
     WaitForSeconds waitForOverdriveFireInterval;
     WaitForSeconds waitHealthRegenerateTime;
     WaitForSeconds waitForDeccelerationTime;
+    WaitForSeconds waitInvincibleTime;
     WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
     [Header("OVERDRIVING")]
@@ -54,12 +56,17 @@ public class Player : Character
     bool isOverdriving = false;
 
     Rigidbody2D playerRigidbody;
+    new Collider2D collider;
 
     MissileSystem missile;
 
     float t;
+
+    Vector2 moveDirection;
     Vector2 previousVelocity;
     readonly float slowMotionDuration = 1f;
+
+    readonly float InvincibleTime = 1f;
     float paddingX;
     float paddingY;
 
@@ -71,7 +78,9 @@ public class Player : Character
     private void Awake() 
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
+        collider = GetComponent<Collider2D>();
         missile = GetComponent<MissileSystem>();
+
         playerRigidbody.gravityScale = 0;
 
         var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
@@ -83,6 +92,7 @@ public class Player : Character
         waitForOverdriveFireInterval = new WaitForSeconds(fireInterval / overDriveFireFactor);
         waitHealthRegenerateTime = new WaitForSeconds(healthRegenerateTime);
         waitForDeccelerationTime = new WaitForSeconds(deccelerationTime);
+        waitInvincibleTime = new WaitForSeconds(InvincibleTime);
     }
 
     protected override void OnEnable() 
@@ -143,6 +153,8 @@ public class Player : Character
         TimeController.Instance.BulletTime(slowMotionDuration);
         if(gameObject.activeSelf)
         {
+            Move(moveDirection);
+            StartCoroutine(InvincibleCoroutine());
             if(regenerateHealth)
             {
                 if(healthRegenerateCoroutine != null)
@@ -154,6 +166,15 @@ public class Player : Character
         }
     }
 
+    IEnumerator InvincibleCoroutine()
+    {
+        collider.isTrigger = true;
+
+        yield return waitInvincibleTime;
+
+        collider.isTrigger = false;
+    }
+
     #region MOVE
     void Move(Vector2 moveInput)
     {
@@ -161,7 +182,8 @@ public class Player : Character
         {
             StopCoroutine(moveCoroutine);
         }
-        moveCoroutine =  StartCoroutine(MoveCoroutine(accelerationTime ,moveInput.normalized * moveSpeed));
+        moveDirection = moveInput.normalized;
+        moveCoroutine =  StartCoroutine(MoveCoroutine(accelerationTime ,moveDirection * moveSpeed));
         StopCoroutine(nameof(DeccelerationCoroutine));
 
         StartCoroutine(nameof(MovePositionLimitCoroutine));
@@ -173,7 +195,8 @@ public class Player : Character
         {
             StopCoroutine(moveCoroutine);
         }
-        moveCoroutine = StartCoroutine(MoveCoroutine(deccelerationTime, Vector2.zero));
+        moveDirection = Vector2.zero;
+        moveCoroutine = StartCoroutine(MoveCoroutine(deccelerationTime, moveDirection));
         StartCoroutine(nameof(DeccelerationCoroutine));
     }
 
@@ -215,11 +238,13 @@ public class Player : Character
     #region FIRE
     void Fire()
     {
+        muzzleVFX.Play();
         StartCoroutine(nameof(FireCoroutine));
     }
 
     void StopFire()
     {
+        muzzleVFX.Stop();
         StopCoroutine(nameof(FireCoroutine));
     }
 
