@@ -8,6 +8,7 @@ public class PlayerEnergy : Singleton<PlayerEnergy>
     [SerializeField] float overdriveInterval = 0.1f;
 
     bool available = true;
+
     public const int MAX = 100;
     public const int PERCENT = 1;
     int energy;
@@ -20,38 +21,46 @@ public class PlayerEnergy : Singleton<PlayerEnergy>
         waitForOverdriveInterval = new WaitForSeconds(overdriveInterval);
     }
 
-    private void OnEnable()
+    void OnEnable()
     {
         PlayerOverdrive.on += PlayerOverdriveOn;
         PlayerOverdrive.off += PlayerOverdriveOff;
     }
 
-    private void Start()
+    void OnDisable()
+    {
+        PlayerOverdrive.on -= PlayerOverdriveOn;
+        PlayerOverdrive.off -= PlayerOverdriveOff;
+    }
+
+    void Start()
     {
         energyBar.Initialize(energy, MAX);
+        // Obtain(MAX);
     }
 
     public void Obtain(int value)
     {
-        if(energy == MAX || !available || !gameObject.activeSelf) return;
+        if (energy == MAX || !available || !gameObject.activeSelf) return;
 
-        // energy += value;
         energy = Mathf.Clamp(energy + value, 0, MAX);
-        energyBar.UpdateStates(energy,MAX);
+        energyBar.UpdateStates(energy, MAX);
     }
 
     public void Use(int value)
     {
         energy -= value;
-        energyBar.UpdateStates(energy,MAX);
+        energyBar.UpdateStates(energy, MAX);
 
-        if(energy == 0 && !available)
+        // if player is overdriving and energy = 0
+        if (energy == 0 && !available)
         {
+            // player stop overdriving
             PlayerOverdrive.off.Invoke();
         }
     }
 
-    public bool IsEnough(int value) { return energy >= value; }
+    public bool IsEnough(int value) => energy >= value;
 
     void PlayerOverdriveOn()
     {
@@ -67,13 +76,13 @@ public class PlayerEnergy : Singleton<PlayerEnergy>
 
     IEnumerator KeepUsingCoroutine()
     {
-        while(gameObject.activeSelf && energy > 0)
+        while (gameObject.activeSelf && energy > 0)
         {
-            //every 0.1 secons
+            // every 0.1 seconds 
             yield return waitForOverdriveInterval;
 
-            //use 1 percent max energy , every 1 seconds use 10 percent of max energy
-            //that means overdrive last 10 seconds
+            // use 1% of max energy, every 1 second use 10% of max energy 
+            // means that overdrive last for 10 seconds
             Use(PERCENT);
         }
     }

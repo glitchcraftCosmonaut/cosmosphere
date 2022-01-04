@@ -20,6 +20,8 @@ TagManager:
   - Boss
   - CollectableTriggerZone
   - BulletTriggerZone
+  - Player Missile
+  - Enemy Beam
   layers:
   - Default
   - TransparentFX
@@ -42,7 +44,7 @@ TagManager:
   - Collectable
   - CollectableTriggerZone
   - CollectableBorder
-  - 
+  - Interactable
   - 
   - 
   - 

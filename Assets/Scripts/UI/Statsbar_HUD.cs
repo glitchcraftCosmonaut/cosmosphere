@@ -10,6 +10,7 @@ public class Statsbar_HUD : Statsbar
     protected virtual void SetPercentText()
     {
         percentText.text = Mathf.RoundToInt(targetFillAmount * 100f) + "%";
+        // percentText.text = targetFillAmount.ToString("P0");
     }
 
     public override void Initialize(float currentValue, float maxValue)

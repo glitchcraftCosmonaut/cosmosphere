@@ -44,6 +44,22 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": ""
+                },
+                {
+                    "name": "BulletTime",
+                    "type": "Button",
+                    "id": "0982c6c6-fe1f-4c05-946d-1e6015dc1dd8",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                },
+                {
+                    "name": "Slash",
+                    "type": "Button",
+                    "id": "52b9fde8-0722-42a6-8ee0-69ba4f6e6253",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
                 }
             ],
             "bindings": [
@@ -204,7 +220,7 @@
                 {
                     "name": "",
                     "id": "2955852e-2a64-40e2-a419-68e1818f0e68",
-                    "path": "<Keyboard>/x",
+                    "path": "<Keyboard>/v",
                     "interactions": "",
                     "processors": "",
                     "groups": "PC",
@@ -264,6 +280,50 @@
                     "processors": "",
                     "groups": "PC",
                     "action": "Launch Missile",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "e7e5583d-a491-4299-bb6b-71c6edcf8a32",
+                    "path": "<Gamepad>/leftTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "BulletTime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "56afd3c6-6bc8-43f2-9717-892b33520850",
+                    "path": "<Keyboard>/leftShift",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "BulletTime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "29da84dc-7b01-4132-adba-3189dc4b88b1",
+                    "path": "<Keyboard>/x",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Slash",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "64165bd7-289c-4331-8c51-dcf873f11d16",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "PC",
+                    "action": "Slash",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

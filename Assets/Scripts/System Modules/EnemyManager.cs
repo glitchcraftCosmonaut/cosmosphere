@@ -12,6 +12,7 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] GameObject[] enemyPrefab;
     [SerializeField] float timeBetweenSpawns = 1f;
     [SerializeField] float timeBetweenWaves = 1f;
+    [SerializeField] float timeUIWarning = 1f;
     [SerializeField] int minEnemyAmount = 4;
     [SerializeField] int maxEnemyAmount = 10;
     [SerializeField] GameObject bossPrefab;
@@ -19,6 +20,7 @@ public class EnemyManager : Singleton<EnemyManager>
 
     WaitForSeconds waitTimeBetweenSpawns;
     WaitForSeconds waitTimeBetweenWaves;
+    WaitForSeconds waitUIWarning;
     WaitUntil waitUntilNoEnemy;
 
     int waveNumber = 1;
@@ -32,6 +34,7 @@ public class EnemyManager : Singleton<EnemyManager>
         enemyList = new List<GameObject>();
         waitTimeBetweenSpawns = new WaitForSeconds(timeBetweenSpawns);
         waitTimeBetweenWaves = new WaitForSeconds(timeBetweenWaves);
+        waitUIWarning = new WaitForSeconds(timeUIWarning);
         waitUntilNoEnemy = new WaitUntil(() => enemyList.Count ==0);
     }
 
@@ -40,9 +43,7 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         while(spawnEnemy && GameManager.GameState != GameState.GameOver)
         {
-            waveUI.SetActive(true);
             yield return waitTimeBetweenWaves;
-            waveUI.SetActive(false);
             yield return  StartCoroutine(nameof(RandomlySpawnCoroutine));
         }
     }
@@ -51,7 +52,9 @@ public class EnemyManager : Singleton<EnemyManager>
     {
         if(waveNumber % bossWaveNumber == 0)
         {
-            
+            waveUI.SetActive(true);
+            yield return waitUIWarning;
+            waveUI.SetActive(false);
             var boss = PoolManager.Release(bossPrefab);
             enemyList.Add(boss);
         }

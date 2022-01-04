@@ -6,6 +6,7 @@ public class Character : MonoBehaviour
 {
     [SerializeField] GameObject deathVFX;
     [SerializeField] AudioData[] deathSFX;
+    
 
     [Header("HEALTH SYSTEM")]
     [SerializeField] protected float maxHealth;
@@ -61,4 +62,5 @@ public class Character : MonoBehaviour
             TakeDamage(maxHealth * percent);
         }
     }
+
 }

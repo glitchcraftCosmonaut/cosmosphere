@@ -7,6 +7,8 @@ public class PoolManager : MonoBehaviour
     [SerializeField] Pool[] playerProjectilesPool;
     [SerializeField] Pool[] enemyProjectilesPool;
     [SerializeField] Pool[] vfxPools;
+    [SerializeField] Pool[] lootItemPools;
+    [SerializeField] Pool[] bulletHellSpawner;
 
 
     static Dictionary<GameObject, Pool> dictionary;
@@ -19,6 +21,8 @@ public class PoolManager : MonoBehaviour
         Initialize(playerProjectilesPool);
         Initialize(enemyProjectilesPool);
         Initialize(vfxPools);
+        Initialize(lootItemPools);
+        Initialize(bulletHellSpawner);
 
 
     }
@@ -29,6 +33,8 @@ public class PoolManager : MonoBehaviour
         CheckPoolSize(playerProjectilesPool);
         CheckPoolSize(enemyProjectilesPool);
         CheckPoolSize(vfxPools);
+        CheckPoolSize(lootItemPools);
+        CheckPoolSize(bulletHellSpawner);
 
     }
 

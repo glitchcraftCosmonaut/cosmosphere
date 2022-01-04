@@ -19308,6 +19308,7 @@ GameObject:
   - component: {fileID: 5735159873588532444}
   - component: {fileID: 1615218665}
   - component: {fileID: 1615218666}
+  - component: {fileID: -4553417072824973407}
   m_Layer: 9
   m_Name: Boss The S.H.A.R.K
   m_TagString: Enemy
@@ -19457,6 +19458,31 @@ MonoBehaviour:
   beamLaunchSFX:
     audioClip: {fileID: 8300000, guid: e8005851546ef034aa6688f76d1daa52, type: 3}
     volume: 1
+--- !u!114 &-4553417072824973407
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5735159873588532432}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46e392fe93a0f3e49a7b8b2e389c0560, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  lootSettings:
+  - prefab: {fileID: 2019851316260838503, guid: 3281a09cc02e0e3478edeb13d697cd38, type: 3}
+    dropPercentage: 70
+  - prefab: {fileID: 2019851316260838503, guid: 652b6f2b6b236e44da76ff8c43307fd4, type: 3}
+    dropPercentage: 50
+  - prefab: {fileID: 5921898909932458412, guid: 853e9cf2d19d10a44947898a95b33246, type: 3}
+    dropPercentage: 40
+  - prefab: {fileID: 1604554900472224324, guid: f85c5fe7e46557a44a51545100a28c3c, type: 3}
+    dropPercentage: 40
+  - prefab: {fileID: 7946695540464534128, guid: 286b3ebf9063d1b4fa7d2acb14489695, type: 3}
+    dropPercentage: 20
+  - prefab: {fileID: 7021913161279593451, guid: 58293df6629a1ca41945239608f9b6ba, type: 3}
+    dropPercentage: 50
 --- !u!1 &6777184692101022918
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,12 +1,19 @@
+using System.Collections;
 using UnityEngine;
 
 public class Boss : Enemy
 {
     BossHealthBar healthBar;
     Canvas healthBarCanvas;
+    // [SerializeField] Material hurtMat;
+    // private MeshRenderer mp;
+    // private Material defaultMat3D;
 
-    private void Awake()
+    protected override void Awake()
     {
+        base.Awake();
+        // mp = GetComponentInChildren<MeshRenderer>();
+        // defaultMat3D = GetComponentInChildren<MeshRenderer>().material;
         healthBar = FindObjectOfType<BossHealthBar>();
         healthBarCanvas = healthBar.GetComponentInChildren<Canvas>();
     }
@@ -35,6 +42,7 @@ public class Boss : Enemy
     public override void TakeDamage(float damage)
     {
         base.TakeDamage(damage);
+        // StartCoroutine(nameof(HurtEffect));
         healthBar.UpdateStates(health, maxHealth);
     }
 
@@ -42,4 +50,11 @@ public class Boss : Enemy
     {
         maxHealth += EnemyManager.Instance.WaveNumber * healthFactor;
     }
+
+    // IEnumerator HurtEffect()
+    // {
+    //     mp.material = hurtMat;
+    //     yield return new WaitForSeconds(0.2f);
+    //     mp.material = defaultMat3D;
+    // }
 }
