@@ -44,7 +44,7 @@ public class GameController: MonoBehaviour
 	[SerializeField] public HighScoreHandler highScoreHandler;
 	// [SerializeField] public string playerName;
 	[SerializeField] public InputField playerName;
-	[SerializeField] Player player;
+	[SerializeField] PlayerMech player;
 
 
 	void Awake () 
