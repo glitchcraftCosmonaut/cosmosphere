@@ -12,6 +12,8 @@ public class Viewport : Singleton<Viewport>
 
     float middleX;
 
+    public float MaxX => maxX;
+
     private void Start()
     {
         Camera mainCamera = Camera.main;

@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Game Demo Proto.unity
     guid: 710892bdb2f1d7841a1f4fe353032aa0
+  - enabled: 1
+    path: Assets/Scenes/Scoring.unity
+    guid: 3c002eb4bb9ff4f4f96b590767289871
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: b718e31db635bb749a653651f908375b, type: 2}

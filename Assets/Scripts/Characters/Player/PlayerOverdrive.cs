@@ -15,12 +15,14 @@ public class PlayerOverdrive : MonoBehaviour
     [SerializeField] AudioData onSFX;
     [SerializeField] AudioData offSFX;
 
-    private void Awake() {
+    private void Awake() 
+    {
         on += On;
         off += Off;
     }
 
-    private void OnDestroy() {
+    private void OnDestroy()
+    {
         on -= On;
         off -= Off;
     }

@@ -46,7 +46,8 @@ public class GameOverScreen : MonoBehaviour
         AudioManager.Instance.PlaySFX(confirmGameOverSound);
         input.DisableAllInput();
         animator.Play(exitStateID);
-        SceneLoader.Instance.LoadMainMenuScene();
+        SceneLoader.Instance.LoadScoringScene();
+        //todo restart or main menu
     }
 
     private void OnGameOver()

@@ -12,11 +12,15 @@ public class EnemyManager : Singleton<EnemyManager>
     [SerializeField] GameObject[] enemyPrefab;
     [SerializeField] float timeBetweenSpawns = 1f;
     [SerializeField] float timeBetweenWaves = 1f;
+    [SerializeField] float timeUIWarning = 1f;
     [SerializeField] int minEnemyAmount = 4;
     [SerializeField] int maxEnemyAmount = 10;
+    [SerializeField] GameObject bossPrefab;
+    [SerializeField] int bossWaveNumber;
 
     WaitForSeconds waitTimeBetweenSpawns;
     WaitForSeconds waitTimeBetweenWaves;
+    WaitForSeconds waitUIWarning;
     WaitUntil waitUntilNoEnemy;
 
     int waveNumber = 1;
@@ -30,30 +34,41 @@ public class EnemyManager : Singleton<EnemyManager>
         enemyList = new List<GameObject>();
         waitTimeBetweenSpawns = new WaitForSeconds(timeBetweenSpawns);
         waitTimeBetweenWaves = new WaitForSeconds(timeBetweenWaves);
+        waitUIWarning = new WaitForSeconds(timeUIWarning);
         waitUntilNoEnemy = new WaitUntil(() => enemyList.Count ==0);
     }
 
 
     IEnumerator Start()
     {
-        while(spawnEnemy)
+        while(spawnEnemy && GameManager.GameState != GameState.GameOver)
         {
-            waveUI.SetActive(true);
             yield return waitTimeBetweenWaves;
-            waveUI.SetActive(false);
             yield return  StartCoroutine(nameof(RandomlySpawnCoroutine));
         }
     }
 
     IEnumerator RandomlySpawnCoroutine()
     {
-        enemyAmount = Mathf.Clamp(enemyAmount, minEnemyAmount + waveNumber / 3, maxEnemyAmount);
-
-        for(int i = 0; i < enemyAmount; i++)
+        if(waveNumber % bossWaveNumber == 0)
         {
-            enemyList.Add(PoolManager.Release(enemyPrefab[Random.Range(0, enemyPrefab.Length)]));
+            waveUI.SetActive(true);
+            yield return waitUIWarning;
+            waveUI.SetActive(false);
+            var boss = PoolManager.Release(bossPrefab);
+            enemyList.Add(boss);
+        }
+        else
+        {
+            enemyAmount = Mathf.Clamp(enemyAmount, minEnemyAmount + waveNumber / bossWaveNumber, maxEnemyAmount);
 
-            yield return waitTimeBetweenSpawns;
+            for(int i = 0; i < enemyAmount; i++)
+            {
+                enemyList.Add(PoolManager.Release(enemyPrefab[Random.Range(0, enemyPrefab.Length)]));
+
+                yield return waitTimeBetweenSpawns;
+            }
+
         }
         yield return waitUntilNoEnemy;
 

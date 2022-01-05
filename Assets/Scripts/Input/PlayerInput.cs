@@ -14,8 +14,11 @@ public class PlayerInput :
     public event UnityAction onStopMove = delegate {};
 
     public event UnityAction onFire = delegate {};
-
     public event UnityAction onStopFire = delegate {};
+    public event UnityAction onBulletTime = delegate {};
+    public event UnityAction onStopBulletTime = delegate {};
+
+    public event UnityAction onSlash = delegate {};
     public event UnityAction onOverdrive = delegate {};
     public event UnityAction onPause = delegate {};
     public event UnityAction onUnpause = delegate {};
@@ -128,6 +131,26 @@ public class PlayerInput :
         if(context.performed)
         {
             onConfirmGameOver.Invoke();
+        }
+    }
+
+    public void OnBulletTime(InputAction.CallbackContext context)
+    {
+        if(context.phase == InputActionPhase.Performed)
+        {
+            onBulletTime.Invoke();
+        }
+        if(context.phase == InputActionPhase.Canceled)
+        {
+            onStopBulletTime.Invoke();
+        }
+    }
+
+    public void OnSlash(InputAction.CallbackContext context)
+    {
+        if(context.performed)
+        {
+            onSlash.Invoke();
         }
     }
 }

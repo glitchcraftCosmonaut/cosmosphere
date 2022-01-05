@@ -1481,6 +1481,8 @@ GameObject:
   - component: {fileID: 1787774752}
   - component: {fileID: 1787774754}
   - component: {fileID: 1787774753}
+  - component: {fileID: 1787774756}
+  - component: {fileID: 1787774755}
   m_Layer: 5
   m_Name: Main Menu
   m_TagString: Untagged
@@ -1504,10 +1506,10 @@ RectTransform:
   m_Father: {fileID: 939335446}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 800, y: 800}
+  m_AnchorMin: {x: 1, y: 0.5}
+  m_AnchorMax: {x: 1, y: 0.5}
+  m_AnchoredPosition: {x: -402.96997, y: 0.0000076293945}
+  m_SizeDelta: {x: 805.94, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1787774753
 MonoBehaviour:
@@ -1524,10 +1526,10 @@ MonoBehaviour:
   m_Padding:
     m_Left: 0
     m_Right: 0
-    m_Top: 0
+    m_Top: 122
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: 0
+  m_Spacing: -200
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
@@ -1556,6 +1558,44 @@ Canvas:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_TargetDisplay: 0
+--- !u!114 &1787774755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787774751}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 0}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1787774756
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1787774751}
+  m_CullTransparentMesh: 1
 --- !u!1 &1902458230
 GameObject:
   m_ObjectHideFlags: 0
@@ -1725,10 +1765,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1902458231}
     m_Modifications:
-    - target: {fileID: 2848737367532951873, guid: e1d5aca81e50d084a931c0da3c0a90fd, type: 3}
-      propertyPath: m_Text
-      value: START
-      objectReference: {fileID: 0}
     - target: {fileID: 2848737367835839409, guid: e1d5aca81e50d084a931c0da3c0a90fd, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5

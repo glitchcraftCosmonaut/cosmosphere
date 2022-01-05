@@ -14,6 +14,7 @@ public class WaveUI : MonoBehaviour
     }
     private void OnEnable()
     {
-        waveText.text = "- WAVE " + EnemyManager.Instance.WaveNumber + " -";
+        // waveText.text = "- WAVE " + EnemyManager.Instance.WaveNumber + " -";
+        waveText.text = "WARNING!";
     }
 }

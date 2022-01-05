@@ -10,18 +10,20 @@ public class EnemyController : MonoBehaviour
     // [SerializeField] float moveRotationAngle;
 
     [Header("FIRING")]
-    [SerializeField] GameObject[] projectiles;
-    [SerializeField] AudioData[] projectileLaunchSFX;
-    [SerializeField] Transform muzzle;
-    [SerializeField] float minFireInterval;
-    [SerializeField] float maxFireInterval;
+    [SerializeField] protected GameObject[] projectiles;
+    [SerializeField] protected AudioData[] projectileLaunchSFX;
+    [SerializeField] protected Transform muzzle;
+    [SerializeField] protected ParticleSystem muzzleVFX;
+    [SerializeField] protected float minFireInterval;
+    [SerializeField] protected float maxFireInterval;
 
-    float paddingX;
+    protected float paddingX;
     float paddingY;
+    protected Vector3 targetPosition;
 
     WaitForFixedUpdate waitForFixedUpdate = new WaitForFixedUpdate();
 
-    private void Awake() 
+    protected virtual void Awake() 
     {
         var size = transform.GetChild(0).GetComponent<Renderer>().bounds.size;
 
@@ -29,7 +31,7 @@ public class EnemyController : MonoBehaviour
         paddingY = size.y / 2f;
     }
 
-    private void OnEnable() 
+    protected virtual void OnEnable() 
     {
         StartCoroutine(nameof(RandomlyMovingCoroutine));
         StartCoroutine(nameof(RandomlyFireCoroutine));
@@ -45,7 +47,7 @@ public class EnemyController : MonoBehaviour
     {
         transform.position = Viewport.Instance.RandomEnemySpawnPosition(paddingX, paddingY);
 
-        Vector3 targetPosition = Viewport.Instance.RandomRighHalfPosition(paddingX, paddingY);
+        targetPosition = Viewport.Instance.RandomRighHalfPosition(paddingX, paddingY);
 
         while(gameObject.activeSelf)
         {
@@ -68,7 +70,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    private IEnumerator RandomlyFireCoroutine()
+    protected virtual IEnumerator RandomlyFireCoroutine()
     {
         while (gameObject.activeSelf)
         {
@@ -81,6 +83,7 @@ public class EnemyController : MonoBehaviour
                 PoolManager.Release(projectile, muzzle.position);
             }
             AudioManager.Instance.PlayRandomSFX(projectileLaunchSFX);
+            muzzleVFX.Play();
         }
     }
 }

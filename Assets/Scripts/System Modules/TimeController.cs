@@ -5,6 +5,7 @@ using UnityEngine;
 public class TimeController : Singleton<TimeController>
 {
     [SerializeField, Range(0f, 1f)] float bulletTimeScale = 0.1f;
+    [SerializeField,Range(0f,1f)] float bulletTimeController = 0.5f;
 
     float defaultFixedDeltaTime;
     float timeScaleBeforePause;
@@ -25,6 +26,11 @@ public class TimeController : Singleton<TimeController>
     public void Unpause()
     {
         Time.timeScale = timeScaleBeforePause;
+    }
+    public void BulletTime()
+    {
+        Time.timeScale = bulletTimeController;
+        Time.fixedDeltaTime = 0.02f * Time.timeScale;
     }
     public void BulletTime(float duration)
     {

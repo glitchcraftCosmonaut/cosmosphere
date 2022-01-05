@@ -6,6 +6,7 @@ public class Character : MonoBehaviour
 {
     [SerializeField] GameObject deathVFX;
     [SerializeField] AudioData[] deathSFX;
+    
 
     [Header("HEALTH SYSTEM")]
     [SerializeField] protected float maxHealth;
@@ -17,6 +18,7 @@ public class Character : MonoBehaviour
     }
     public virtual void TakeDamage(float damage)
     {
+        if(health == 0f) return;
         health -= damage;
         if(health <= 0)
         {
@@ -60,4 +62,5 @@ public class Character : MonoBehaviour
             TakeDamage(maxHealth * percent);
         }
     }
+
 }

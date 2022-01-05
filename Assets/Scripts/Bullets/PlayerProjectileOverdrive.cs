@@ -4,7 +4,13 @@ using UnityEngine;
 
 public class PlayerProjectileOverdrive : PlayerProjectile
 {
+    TrailRenderer trail;
     [SerializeField] ProjectileGuidanceSystem guidanceSystem;
+
+    protected override void Awake()
+    {
+        trail = GetComponentInChildren<TrailRenderer>();
+    }
     protected override void OnEnable()
     {
         SetTarget(EnemyManager.Instance.RandomEnemy);
@@ -19,5 +25,10 @@ public class PlayerProjectileOverdrive : PlayerProjectile
             //track target
             StartCoroutine(guidanceSystem.HomingCoroutine(target));
         }
+    }
+
+    private void OnDisable()
+    {
+        trail.Clear();
     }
 }

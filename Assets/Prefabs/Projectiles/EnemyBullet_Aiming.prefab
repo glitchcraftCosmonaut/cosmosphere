@@ -71,8 +71,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2246503096186400566, guid: af37bb9e886d0544f9677473bbb1216c, type: 3}
-  m_Color: {r: 0.9172354, g: 1, b: 0, a: 1}
+  m_Sprite: {fileID: 9062058152343574259, guid: ab87af4b0b8a0c544b18b739c90ae186, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 1886703243126500658}
   - component: {fileID: 1886703243126500657}
   - component: {fileID: 2391294810461764362}
-  - component: {fileID: 3854988993219744159}
+  - component: {fileID: 5353247916345738821}
   m_Layer: 10
   m_Name: EnemyBullet_Aiming
   m_TagString: Untagged
@@ -146,11 +146,11 @@ MonoBehaviour:
   hitSFX:
   - audioClip: {fileID: 8300000, guid: 2e071f5b8b8467d45a5e6e24c23c6ad4, type: 3}
     volume: 1
-  damage: 10
+  damage: 20
   moveSpeed: 10
   moveDirection: {x: 0, y: 0}
---- !u!58 &3854988993219744159
-CircleCollider2D:
+--- !u!60 &5353247916345738821
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -162,6 +162,23 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.050138474, y: 0.00699611}
-  serializedVersion: 2
-  m_Radius: 0.16768551
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.13331938, y: 0.039619505}
+      - {x: 0.044594765, y: 0.13211103}
+      - {x: -0.039299488, y: 0.13108876}
+      - {x: -0.1279211, y: 0.043554593}
+      - {x: -0.12810522, y: -0.0412046}
+      - {x: -0.045444906, y: -0.13092838}
+      - {x: 0.044805646, y: -0.13263534}
+      - {x: 0.1332674, y: -0.04182987}

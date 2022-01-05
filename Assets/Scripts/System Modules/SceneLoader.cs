@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,6 +12,7 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
 
     const string GAMEPLAY = "Game Demo Proto";
     const string MAIN_MENU = "MainMenu";
+    const string SCORING = "Scoring";
 
     IEnumerator LoadingCoroutine(string sceneName)
     {
@@ -47,6 +49,7 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
         transitionImage.gameObject.SetActive(false);
     }
 
+
     public void LoadGamePlayScene()
     {
         StopAllCoroutines();
@@ -57,5 +60,10 @@ public class SceneLoader : PersistentSingleton<SceneLoader>
     {
         StopAllCoroutines();
         StartCoroutine(LoadingCoroutine(MAIN_MENU));
+    }
+    public void LoadScoringScene()
+    {
+        StopAllCoroutines();
+        StartCoroutine(LoadingCoroutine(SCORING));
     }
 }
