@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerProjectileNRGSys : Singleton<PlayerProjectileNRGSys>
@@ -8,17 +6,8 @@ public class PlayerProjectileNRGSys : Singleton<PlayerProjectileNRGSys>
 
     public bool available = true;
     int projectileNRG;
-    WaitForSeconds waitForOverdriveInterval;
-    private float overdriveInterval = 1f;
-    public const int PERCENT = 1;
     public const int MAX = 100;
 
-
-    protected override void Awake()
-    {
-        base.Awake();
-        waitForOverdriveInterval = new WaitForSeconds(overdriveInterval);
-    }
     void OnEnable()
     {
         PlayerProjectileActive.on += PlayerProjectileOn;
@@ -34,6 +23,7 @@ public class PlayerProjectileNRGSys : Singleton<PlayerProjectileNRGSys>
     void Start()
     {
         projectileBar.Initialize(projectileNRG, MAX);
+        //use this for debugging
         // Obtain(MAX);
     }
 
@@ -43,22 +33,24 @@ public class PlayerProjectileNRGSys : Singleton<PlayerProjectileNRGSys>
 
         projectileNRG = Mathf.Clamp(projectileNRG + value, 0, MAX);
         projectileBar.UpdateStates(projectileNRG, MAX);
+
+        if(projectileNRG == MAX && available)
+        {
+            PlayerProjectileActive.on.Invoke();
+        }
     }
-    //BIG BUGS START HERE FIX THIS ASAP PLAYER WONT STOP SHOOTING UNTIL MINUS INT
     public void Use(int value)
     {
-        projectileNRG -= value;
+        // projectileNRG -= value; -->
+        //stop at zero so this will not go down to minus point
+        projectileNRG = Mathf.Clamp(projectileNRG - value, 0, MAX);
         projectileBar.UpdateStates(projectileNRG, MAX);
 
-        // if player is overdriving and energy = 0
-        //TODO PROJECTILE GET MINUS POINT AND DOESNT STOP SHOOTING UNTIL BUTTON UP
-        //BUT WHEN BUTTON DOWN AGAIN CANNOT SHOOT
+        // if nrg == 0 and not available to get nrg
         if (projectileNRG == 0 && !available)
         {
-            // player stop overdriving
-            // return;
-            // PlayerProjectileOff();
-            PlayerOverdrive.off.Invoke();
+            // invoke this 
+            PlayerProjectileActive.off.Invoke();
         }
     }
 
@@ -67,20 +59,10 @@ public class PlayerProjectileNRGSys : Singleton<PlayerProjectileNRGSys>
     void PlayerProjectileOn()
     {
         available = false;
-        StartCoroutine(nameof(KeepUsingCoroutine));
     }
 
     void PlayerProjectileOff()
     {
         available = true;
-        StopCoroutine(nameof(KeepUsingCoroutine));
-    }
-    IEnumerator KeepUsingCoroutine()
-    {
-        while (gameObject.activeSelf && projectileNRG > 0)
-        {
-            yield return waitForOverdriveInterval;
-            Use(PERCENT);
-        }
-    }   
+    }  
 }

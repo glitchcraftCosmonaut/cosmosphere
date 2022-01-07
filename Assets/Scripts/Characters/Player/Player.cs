@@ -42,6 +42,7 @@ public class Player : Character
     [SerializeField, Range(0, 2)] int weaponPower = 0;
     [SerializeField] float fireInterval = 0.2f;
     [SerializeField] int projectileCost = 1;
+    [SerializeField] int projectileMAXNRG = 100;
 
     
 
@@ -277,10 +278,9 @@ public class Player : Character
     #endregion
 
     #region FIRE
-    void Fire()
+    public void Fire()
     {
-        if(!PlayerProjectileNRGSys.Instance.IsEnough(projectileCost)) return;
-        PlayerProjectileActive.on.Invoke();
+        if(!isProjectileActive && !PlayerProjectileNRGSys.Instance.IsEnough(projectileMAXNRG)) return;
         muzzleVFX.Play();
         StartCoroutine(nameof(FireCoroutine));
     }
@@ -290,7 +290,6 @@ public class Player : Character
         muzzleVFX.Stop();
         StopCoroutine(nameof(FireCoroutine));
     }
-
     IEnumerator FireCoroutine()
     {
         while(true)
@@ -319,13 +318,6 @@ public class Player : Character
             
         }
     }
-
-    // void ProjectileActive()
-    // {
-    //     if(!PlayerProjectileNRGSys.Instance.IsEnough(PlayerProjectileNRGSys.MAX)) return;
-    //     PlayerProjectileActive.on.Invoke();
-    // }
-
     void ProjectileIsOn()
     {
         isProjectileActive = true;
@@ -334,6 +326,8 @@ public class Player : Character
     void ProjectileIsOff()
     {
         isProjectileActive = false;
+        muzzleVFX.Stop();
+        StopCoroutine(nameof(FireCoroutine));
     }
     #endregion
 
