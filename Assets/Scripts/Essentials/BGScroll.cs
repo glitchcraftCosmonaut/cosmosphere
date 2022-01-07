@@ -6,6 +6,7 @@ public class BGScroll : MonoBehaviour
 {
     public float speed = 4f;
     private Vector3 startPosition;
+    [SerializeField] float xPosScrolling = -24.09f;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +17,7 @@ public class BGScroll : MonoBehaviour
     void Update()
     {
         transform.Translate(Vector3.left * speed * Time.deltaTime);
-        if(transform.position.x < -24.09)
+        if(transform.position.x < xPosScrolling)
         {
             transform.position = startPosition;
         }

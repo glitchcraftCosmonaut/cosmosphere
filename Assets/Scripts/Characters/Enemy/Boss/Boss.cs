@@ -1,9 +1,11 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Boss : Enemy
 {
     BossHealthBar healthBar;
+    [SerializeField] string nameText;
     Canvas healthBarCanvas;
     // [SerializeField] Material hurtMat;
     // private MeshRenderer mp;
@@ -15,6 +17,7 @@ public class Boss : Enemy
         // mp = GetComponentInChildren<MeshRenderer>();
         // defaultMat3D = GetComponentInChildren<MeshRenderer>().material;
         healthBar = FindObjectOfType<BossHealthBar>();
+        // nameText = healthBar.bossName;
         healthBarCanvas = healthBar.GetComponentInChildren<Canvas>();
     }
 
@@ -22,6 +25,7 @@ public class Boss : Enemy
     {
         base.OnEnable();
         healthBar.Initialize(health, maxHealth);
+        healthBar.bossName.text = nameText;
         healthBarCanvas.enabled = true;
     }
     protected override void OnCollisionEnter2D(Collision2D other)

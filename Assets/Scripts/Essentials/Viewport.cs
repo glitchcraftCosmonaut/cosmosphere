@@ -11,6 +11,8 @@ public class Viewport : Singleton<Viewport>
     float maxY;
 
     float middleX;
+    float rightMiddleX;
+    float leftMiddleY;
 
     public float MaxX => maxX;
 
@@ -22,6 +24,9 @@ public class Viewport : Singleton<Viewport>
         Vector2 topRight = mainCamera.ViewportToWorldPoint(new Vector3(1f, 1f));
 
         middleX = mainCamera.ViewportToWorldPoint(new Vector3(0.5f, 0f, 0f)).x;
+        rightMiddleX = mainCamera.ViewportToWorldPoint(new Vector3(0.85f, 0f, 0f)).x;
+
+        leftMiddleY = mainCamera.ViewportToWorldPoint(new Vector3(0.0f, 0.5f, 0f)).y;
 
         minX = bottomLeft.x;
         minY = bottomLeft.y;
@@ -58,6 +63,16 @@ public class Viewport : Singleton<Viewport>
 
         return position;
 
+    }
+
+    public Vector3 StayInRightToMiddlePos()
+    {
+        Vector3 position = Vector3.zero;
+
+        position.x = rightMiddleX;
+        position.y = leftMiddleY;
+
+        return position;
     }
     public Vector3 RandomEnemyMovePosition(float paddingX, float paddingY)
     {

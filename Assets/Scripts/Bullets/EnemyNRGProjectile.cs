@@ -1,5 +1,4 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyNRGProjectile : MonoBehaviour
@@ -19,9 +18,10 @@ public class EnemyNRGProjectile : MonoBehaviour
     {
         if (collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            if(player.isProjectileActive == true)
+            if(player.isProjectileActive == false)
             {
                 PlayerProjectileNRGSys.Instance.Obtain(nrgValue);
+                PoolManager.Release(hitVFX, collision.GetContact(0).point, Quaternion.LookRotation(collision.GetContact(0).normal));
                 gameObject.SetActive(false);
             }
             else
