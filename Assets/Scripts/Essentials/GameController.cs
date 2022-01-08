@@ -93,36 +93,36 @@ public class GameController: MonoBehaviour
 				Vector3 bottomRight = Camera.main.ScreenToWorldPoint(new Vector3(Camera.main.pixelWidth, 0, 0));
 				Vector3 spawnPosition = new Vector3 (bottomRight.x,Random.Range(bottomRight.y, topRight.y), 0);
 				Quaternion spawnRotation = Quaternion.Euler(0, 0, 0);
-				if (waveType >= 5.0f) 
-				{
-					GameObject enemy1 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 1"); 
-					if (enemy1 != null) 
-					{
-						enemy1.transform.position = spawnPosition;
-						enemy1.transform.rotation = spawnRotation;
-						enemy1.SetActive(true);
-					}
-				}
-				else if(waveType >= 3.0f)
-				{
-					GameObject enemy2 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 2"); 
-					if (enemy2 != null) 
-					{
-						enemy2.transform.position = spawnPosition;
-						enemy2.transform.rotation = spawnRotation;
-						enemy2.SetActive(true);
-					}
-				}
-				else 
-				{
-					GameObject enemy3 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 3"); 
-					if (enemy3 != null) 
-					{
-						enemy3.transform.position = spawnPosition;
-						enemy3.transform.rotation = spawnRotation;
-						enemy3.SetActive(true);
-					}
-				} 
+				// if (waveType >= 5.0f) 
+				// {
+				// 	GameObject enemy1 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 1"); 
+				// 	if (enemy1 != null) 
+				// 	{
+				// 		enemy1.transform.position = spawnPosition;
+				// 		enemy1.transform.rotation = spawnRotation;
+				// 		enemy1.SetActive(true);
+				// 	}
+				// }
+				// else if(waveType >= 3.0f)
+				// {
+				// 	GameObject enemy2 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 2"); 
+				// 	if (enemy2 != null) 
+				// 	{
+				// 		enemy2.transform.position = spawnPosition;
+				// 		enemy2.transform.rotation = spawnRotation;
+				// 		enemy2.SetActive(true);
+				// 	}
+				// }
+				// else 
+				// {
+				// 	GameObject enemy3 = ObjectPooler.SharedInstance.GetPooledObject("Enemy Ship 3"); 
+				// 	if (enemy3 != null) 
+				// 	{
+				// 		enemy3.transform.position = spawnPosition;
+				// 		enemy3.transform.rotation = spawnRotation;
+				// 		enemy3.SetActive(true);
+				// 	}
+				// } 
         	yield return new WaitForSeconds (spawnInterval);
 			} 
       	yield return new WaitForSeconds (waveInterval);

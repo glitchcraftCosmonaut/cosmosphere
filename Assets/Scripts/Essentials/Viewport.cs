@@ -54,6 +54,13 @@ public class Viewport : Singleton<Viewport>
         return position;
     }
 
+    public Vector3 FixedEnemySpawnPosition()
+    {
+        Vector3 position = Vector3.zero;
+
+        return position;
+    }
+
     public Vector3 RandomRighHalfPosition(float paddingX, float paddingY)
     {
         Vector3 position = Vector3.zero;

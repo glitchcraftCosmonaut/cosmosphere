@@ -8,6 +8,11 @@ public class BladeSystem : MonoBehaviour
     [SerializeField] float bladeCoolDown = 1f;
     Animator slashAnimator;
     [SerializeField] AudioData slashSFX = null;
+    [SerializeField] AudioData hitSFX = null;
+    [SerializeField] protected GameObject hitVFX;
+
+    [SerializeField] protected float damage;
+
     public bool isBladeReady = true;
     bool comboPossible;
     int comboStep;
@@ -87,5 +92,18 @@ public class BladeSystem : MonoBehaviour
         }
 
         isBladeReady = true;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collider)
+    {
+        if(collider.gameObject.TryGetComponent<Character>(out Character character))
+        {
+            character.TakeDamage(damage);
+
+            // var contactPoint = collision.GetContact(0);
+            PoolManager.Release(hitVFX);
+            AudioManager.Instance.PlayRandomSFX(hitSFX);
+            // gameObject.SetActive(false);
+        }
     }
 }

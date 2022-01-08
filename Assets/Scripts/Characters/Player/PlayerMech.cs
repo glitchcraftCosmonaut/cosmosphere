@@ -110,7 +110,7 @@ public class PlayerMech : MonoBehaviour
                 if(shootTimer >= shootIntervalSeconds)
                 {
                     // gun.Shoot();
-                    Shoot();
+                    // Shoot();
                     shootTimer = 0;
                 }
                 else
@@ -164,20 +164,20 @@ public class PlayerMech : MonoBehaviour
 
         }
     }
-    void Shoot() 
-    {
-        foreach(GameObject turret in activePlayerTurrets) 
-        {
-            GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject("Player Bullet"); 
-            if (bullet != null) 
-            {
-                bullet.transform.position = turret.transform.position;
-                bullet.transform.rotation = turret.transform.rotation;
-                bullet.SetActive(true);
-            }
-        }
-        shootSoundFX.Play();
-    }
+    // void Shoot() 
+    // {
+    //     foreach(GameObject turret in activePlayerTurrets) 
+    //     {
+    //         GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject("Player Bullet"); 
+    //         if (bullet != null) 
+    //         {
+    //             bullet.transform.position = turret.transform.position;
+    //             bullet.transform.rotation = turret.transform.rotation;
+    //             bullet.SetActive(true);
+    //         }
+    //     }
+    //     shootSoundFX.Play();
+    // }
 
     
     void ACtiveShield()
@@ -283,26 +283,26 @@ public class PlayerMech : MonoBehaviour
 		upgradeState ++;
 	}
 
-  IEnumerator ActivateScatterShotTurret() 
-  {
+//   IEnumerator ActivateScatterShotTurret() 
+//   {
 
-    // The ScatterShot turret is shot independantly of the z key
-    // This Coroutine shoots the scatteshot at a reload interval
+//     // The ScatterShot turret is shot independantly of the z key
+//     // This Coroutine shoots the scatteshot at a reload interval
 
-		while (true) 
-		{
-			foreach(GameObject turret in scatterShotTurrets) 
-			{
-				GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject("Player Bullet"); 
-				if (bullet != null) 
-				{
-					bullet.transform.position = turret.transform.position;
-					bullet.transform.rotation = turret.transform.rotation;
-					bullet.SetActive(true);
-				}
-			}
-			shootSoundFX.Play();
-			yield return new WaitForSeconds(scatterShotTurretReloadTime);
-		}
-	}
+// 		while (true) 
+// 		{
+// 			foreach(GameObject turret in scatterShotTurrets) 
+// 			{
+// 				GameObject bullet = ObjectPooler.SharedInstance.GetPooledObject("Player Bullet"); 
+// 				if (bullet != null) 
+// 				{
+// 					bullet.transform.position = turret.transform.position;
+// 					bullet.transform.rotation = turret.transform.rotation;
+// 					bullet.SetActive(true);
+// 				}
+// 			}
+// 			shootSoundFX.Play();
+// 			yield return new WaitForSeconds(scatterShotTurretReloadTime);
+// 		}
+// 	}
 }

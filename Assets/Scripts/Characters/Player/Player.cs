@@ -214,6 +214,15 @@ public class Player : Character
 
         collider.isTrigger = false;
     }
+
+    protected virtual void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            TakeDamage(50);
+            enemy.Die();
+        }
+    }
     
 
     #region MOVE
