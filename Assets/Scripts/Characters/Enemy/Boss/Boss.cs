@@ -28,14 +28,14 @@ public class Boss : Enemy
         healthBar.bossName.text = nameText;
         healthBarCanvas.enabled = true;
     }
-    protected override void OnCollisionEnter2D(Collision2D other)
-    {
-        if(other.gameObject.TryGetComponent<Player>(out Player player))
-        {
-            player.Die();
-            Die();
-        }
-    }
+    // protected override void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if(other.gameObject.TryGetComponent<Player>(out Player player))
+    //     {
+    //         player.Die();
+    //         Die();
+    //     }
+    // }
 
     public override void Die()
     {

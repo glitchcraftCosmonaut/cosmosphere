@@ -6,7 +6,7 @@ public class PlayerProjectileNRGSys : Singleton<PlayerProjectileNRGSys>
 
     public bool available = true;
     int projectileNRG;
-    public const int MAX = 100;
+    public const int MAX = 200;
 
     void OnEnable()
     {
@@ -24,7 +24,7 @@ public class PlayerProjectileNRGSys : Singleton<PlayerProjectileNRGSys>
     {
         projectileBar.Initialize(projectileNRG, MAX);
         //use this for debugging
-        // Obtain(MAX);
+        Obtain(MAX);
     }
 
     public void Obtain(int value)

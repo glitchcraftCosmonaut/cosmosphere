@@ -5,12 +5,14 @@ public class Enemy : Character
     [SerializeField] int scorePoint = 100;
     [SerializeField] int deathEnergyBonus = 3;
     [SerializeField] protected int healthFactor;
+    bool isPlayer;
 
     LootSpawner lootSpawner;
 
     protected virtual void Awake()
     {
         lootSpawner = GetComponent<LootSpawner>();
+        isPlayer = TryGetComponent<Player>(out Player player);
     }
 
     protected override void OnEnable()
@@ -19,14 +21,14 @@ public class Enemy : Character
         base.OnEnable();
     }
 
-    protected virtual void OnCollisionEnter2D(Collision2D other)
-    {
-        if(other.gameObject.TryGetComponent<Player>(out Player player))
-        {
-            player.Die();
-            Die();
-        }
-    }
+    // protected virtual void OnCollisionEnter2D(Collision2D other)
+    // {
+    //     if(other.gameObject.TryGetComponent<Player>(out Player player))
+    //     {
+    //         player.TakeDamage(50);
+    //         Die();
+    //     }
+    // }
 
     public override void Die()
     {
