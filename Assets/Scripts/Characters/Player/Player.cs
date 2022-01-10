@@ -59,9 +59,9 @@ public class Player : Character
     [SerializeField] float overDriveFireFactor = 1.2f;
 
     [Header("===Material===")]
-    // [SerializeField] Material hurtMat;
-    // private SpriteRenderer sp;
-    // private Material defaultMat2D;
+    [SerializeField] Material hurtMat;
+    SpriteRenderer sp;
+    Material defaultMat2D;
 
     bool isOverdriving = false;
 
@@ -100,8 +100,8 @@ public class Player : Character
         collider = GetComponent<Collider2D>();
         missile = GetComponent<MissileSystem>();
         // blade = GetComponentInChildren<BladeSystem>();
-        // sp = GetComponentInChildren<SpriteRenderer>();
-        // defaultMat2D = GetComponentInChildren<SpriteRenderer>().material;
+        sp = GetComponentInChildren<SpriteRenderer>();
+        defaultMat2D = GetComponentInChildren<SpriteRenderer>().material;
 
 
         playerRigidbody.gravityScale = 0;
@@ -137,8 +137,9 @@ public class Player : Character
         PlayerOverdrive.off += OverdriveOff;
     }
 
-    private void OnDisable()
+    void OnDisable()
     {
+        // base.OnDisable();
         input.onMove -= Move;
         input.onStopMove -= StopMove;
         input.onFire -= Fire;
@@ -153,6 +154,8 @@ public class Player : Character
         PlayerProjectileActive.off -= ProjectileIsOff;
         PlayerOverdrive.on -= OverdriveOn;
         PlayerOverdrive.off -= OverdriveOff;
+        // StopCoroutine(HurtEffect());
+
 
     }
     // Start is called before the first frame update
@@ -175,14 +178,15 @@ public class Player : Character
         GameManager.onGameOver?.Invoke();
         GameManager.GameState = GameState.GameOver;
         statsbar_HUD.UpdateStates(0f, maxHealth);
+        // StopCoroutine(HurtEffect());
         base.Die();
     }
 
     public override void TakeDamage(float damage)
     {
+        StartCoroutine(HurtEffect());
         base.TakeDamage(damage);
         PowerDown();
-        // StartCoroutine(nameof(HurtEffect));
         statsbar_HUD.UpdateStates(health, maxHealth);
         TimeController.Instance.BulletTime(slowMotionDuration);
         if(gameObject.activeSelf)
@@ -199,12 +203,6 @@ public class Player : Character
             }
         }
     }
-    // IEnumerator HurtEffect()
-    // {
-    //     sp.material = hurtMat;
-    //     yield return new WaitForSeconds(0.2f);
-    //     sp.material = defaultMat2D;
-    // }
 
     IEnumerator InvincibleCoroutine()
     {
@@ -222,6 +220,13 @@ public class Player : Character
             TakeDamage(50);
             enemy.Die();
         }
+    }
+
+    IEnumerator HurtEffect()
+    {
+        sp.material = hurtMat;
+        yield return new WaitForSeconds(0.1f);
+        sp.material = defaultMat2D;
     }
     
 

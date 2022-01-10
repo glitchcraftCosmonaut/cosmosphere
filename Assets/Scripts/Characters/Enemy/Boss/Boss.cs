@@ -6,17 +6,17 @@ public class Boss : Enemy
 {
     BossHealthBar healthBar;
     [SerializeField] string nameText;
-    Canvas healthBarCanvas;
     // [SerializeField] Material hurtMat;
-    // private MeshRenderer mp;
-    // private Material defaultMat3D;
+    // private SpriteRenderer sp;
+    // private Material defaultMat2D;
+    Canvas healthBarCanvas;
 
     protected override void Awake()
     {
         base.Awake();
-        // mp = GetComponentInChildren<MeshRenderer>();
-        // defaultMat3D = GetComponentInChildren<MeshRenderer>().material;
         healthBar = FindObjectOfType<BossHealthBar>();
+        // sp = GetComponentInChildren<SpriteRenderer>();
+        // defaultMat2D = GetComponentInChildren<SpriteRenderer>().material;
         // nameText = healthBar.bossName;
         healthBarCanvas = healthBar.GetComponentInChildren<Canvas>();
     }
@@ -45,8 +45,8 @@ public class Boss : Enemy
 
     public override void TakeDamage(float damage)
     {
+        StartCoroutine(nameof(HurtEffect));
         base.TakeDamage(damage);
-        // StartCoroutine(nameof(HurtEffect));
         healthBar.UpdateStates(health, maxHealth);
     }
 
@@ -57,8 +57,8 @@ public class Boss : Enemy
 
     // IEnumerator HurtEffect()
     // {
-    //     mp.material = hurtMat;
+    //     sp.material = hurtMat;
     //     yield return new WaitForSeconds(0.2f);
-    //     mp.material = defaultMat3D;
+    //     sp.material = defaultMat2D;
     // }
 }

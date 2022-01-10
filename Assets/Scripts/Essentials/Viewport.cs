@@ -54,6 +54,16 @@ public class Viewport : Singleton<Viewport>
         return position;
     }
 
+    public Vector3 RandomEnemySpawnPositonFromLeft(float paddingX, float paddingY)
+    {
+        Vector3 position = Vector3.zero;
+
+        position.x = minX + paddingX;
+        position.y = Random.Range(minY + paddingY, maxY - paddingY);
+
+        return position;
+    }
+
     public Vector3 FixedEnemySpawnPosition()
     {
         Vector3 position = Vector3.zero;
@@ -67,6 +77,17 @@ public class Viewport : Singleton<Viewport>
         
         position.x = Random.Range(middleX, maxX - paddingX);
         position.y = Random.Range(minY + paddingY, maxY - paddingY);
+
+        return position;
+
+    }
+
+    public Vector3 RightHalfPosition(float paddingX)
+    {
+        Vector3 position = Vector3.zero;
+        
+        position.x = Random.Range(minX + paddingX, maxX - paddingX) ;
+        position.y = transform.position.y;
 
         return position;
 

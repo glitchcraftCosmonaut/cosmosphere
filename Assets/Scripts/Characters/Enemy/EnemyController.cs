@@ -63,6 +63,7 @@ public class EnemyController : MonoBehaviour
             {
                 //set new target position
                 targetPosition = Viewport.Instance.RandomRighHalfPosition(paddingX, paddingY);
+                targetPosition = Viewport.Instance.RandomRighHalfPosition(paddingX, paddingY);
             }
 
             yield return waitForFixedUpdate;

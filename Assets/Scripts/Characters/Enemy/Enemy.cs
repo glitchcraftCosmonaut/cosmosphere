@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : Character
@@ -5,19 +6,23 @@ public class Enemy : Character
     [SerializeField] int scorePoint = 100;
     [SerializeField] int deathEnergyBonus = 3;
     [SerializeField] protected int healthFactor;
-    bool isPlayer;
+    [SerializeField] Material hurtMat;
+    private SpriteRenderer sp;
+    private Material defaultMat2D;
 
     LootSpawner lootSpawner;
 
     protected virtual void Awake()
     {
         lootSpawner = GetComponent<LootSpawner>();
-        isPlayer = TryGetComponent<Player>(out Player player);
+        sp = GetComponentInChildren<SpriteRenderer>();
+        defaultMat2D = GetComponentInChildren<SpriteRenderer>().material;
     }
 
     protected override void OnEnable()
     {
         SetHealth();
+        sp.material = defaultMat2D;
         base.OnEnable();
     }
 
@@ -29,6 +34,12 @@ public class Enemy : Character
     //         Die();
     //     }
     // }
+
+    public override void TakeDamage(float damage)
+    {
+        StartCoroutine(nameof(HurtEffect));
+        base.TakeDamage(damage);
+    }
 
     public override void Die()
     {
@@ -42,5 +53,12 @@ public class Enemy : Character
     protected virtual void SetHealth()
     {
         maxHealth += (int)(EnemyManager.Instance.WaveNumber / healthFactor);
+    }
+
+    protected IEnumerator HurtEffect()
+    {
+        sp.material = hurtMat;
+        yield return new WaitForSeconds(0.2f);
+        sp.material = defaultMat2D;
     }
 }
