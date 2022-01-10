@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MoveRIghtLeft : MonoBehaviour
+public class MoveRightLeft : MonoBehaviour
 {
     public float moveSpeed = 5;
     [Header("FIRING")]

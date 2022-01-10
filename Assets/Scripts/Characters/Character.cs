@@ -16,10 +16,15 @@ public class Character : MonoBehaviour
     {
         health = maxHealth;
     }
+    // protected virtual void OnDisable()
+    // {
+    //     StopCoroutine(HurtEffectController.Instance.HurtEffect());
+    // }
     public virtual void TakeDamage(float damage)
     {
         if(health == 0f) return;
         health -= damage;
+        // StartCoroutine(HurtEffectController.Instance.HurtEffect());
         if(health <= 0)
         {
             Die();
