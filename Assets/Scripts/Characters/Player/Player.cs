@@ -58,10 +58,10 @@ public class Player : Character
     [SerializeField] float overDriveSpeedFactor = 1.2f;
     [SerializeField] float overDriveFireFactor = 1.2f;
 
-    [Header("===Material===")]
-    [SerializeField] Material hurtMat;
-    SpriteRenderer sp;
-    Material defaultMat2D;
+    // [Header("===Material===")]
+    // [SerializeField] Material hurtMat;
+    // SpriteRenderer sp;
+    // Material defaultMat2D;
 
     bool isOverdriving = false;
 
@@ -184,7 +184,7 @@ public class Player : Character
 
     public override void TakeDamage(float damage)
     {
-        StartCoroutine(HurtEffect());
+        // StartCoroutine(HurtEffect());
         base.TakeDamage(damage);
         PowerDown();
         statsbar_HUD.UpdateStates(health, maxHealth);
@@ -222,12 +222,12 @@ public class Player : Character
         }
     }
 
-    IEnumerator HurtEffect()
-    {
-        sp.material = hurtMat;
-        yield return new WaitForSeconds(0.1f);
-        sp.material = defaultMat2D;
-    }
+    // IEnumerator HurtEffect()
+    // {
+    //     sp.material = hurtMat;
+    //     yield return new WaitForSeconds(0.1f);
+    //     sp.material = defaultMat2D;
+    // }
     
 
     #region MOVE

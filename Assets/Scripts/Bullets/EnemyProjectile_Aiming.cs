@@ -1,9 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyProjectile_Aiming : Projectile
 {
+    
     // GameObject target;
     private void Awake()
     {

@@ -1,0 +1,61 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!687078895 &4343727234628468602
+SpriteAtlas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: Character_SpriteAtlas
+  m_EditorData:
+    serializedVersion: 2
+    textureSettings:
+      serializedVersion: 2
+      anisoLevel: 1
+      compressionQuality: 50
+      maxTextureSize: 2048
+      textureCompression: 0
+      filterMode: 0
+      generateMipMaps: 0
+      readable: 0
+      crunchedCompression: 0
+      sRGB: 1
+    platformSettings: []
+    packingSettings:
+      serializedVersion: 2
+      padding: 4
+      blockOffset: 1
+      allowAlphaSplitting: 0
+      enableRotation: 1
+      enableTightPacking: 1
+    secondaryTextureSettings: {}
+    variantMultiplier: 1
+    packables:
+    - {fileID: 2800000, guid: 246e034f89b7a7e4b97626c5e1d1b7a2, type: 3}
+    - {fileID: 2800000, guid: 3b09c1b300a5dc148b240bb42582e9c9, type: 3}
+    - {fileID: 2800000, guid: 38e5d5422217fac488ecff865979ced1, type: 3}
+    - {fileID: 2800000, guid: d49469bf9b6da864f9a561aa87797b2f, type: 3}
+    - {fileID: 2800000, guid: d0e83ecc36884224689e74e58250c00b, type: 3}
+    - {fileID: 2800000, guid: 167e733bec9da1a4382d63e86708ba98, type: 3}
+    totalSpriteSurfaceArea: 56576
+    bindAsDefault: 1
+    isAtlasV2: 0
+    cachedData: {fileID: 0}
+  m_MasterAtlas: {fileID: 0}
+  m_PackedSprites:
+  - {fileID: 21300000, guid: 38e5d5422217fac488ecff865979ced1, type: 3}
+  - {fileID: 21300000, guid: 3b09c1b300a5dc148b240bb42582e9c9, type: 3}
+  - {fileID: 21300000, guid: 167e733bec9da1a4382d63e86708ba98, type: 3}
+  - {fileID: 21300000, guid: d0e83ecc36884224689e74e58250c00b, type: 3}
+  - {fileID: 21300000, guid: 246e034f89b7a7e4b97626c5e1d1b7a2, type: 3}
+  - {fileID: 21300000, guid: d49469bf9b6da864f9a561aa87797b2f, type: 3}
+  m_PackedSpriteNamesToIndex:
+  - Enemy_Mech
+  - elitar_concept
+  - Enemy_Plane_C
+  - Enemy_Plane_B
+  - Player_Mech
+  - Enemy_Plane_A
+  m_RenderDataMap: {}
+  m_Tag: Character_SpriteAtlas
+  m_IsVariant: 0

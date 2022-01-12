@@ -5,6 +5,8 @@ using UnityEngine;
 public class ParticleCollision : MonoBehaviour
 {
     float damage;
+    int nrgValue;
+    bool isNRGProjectiles;
 
     GameObject hitVFX;
     ParticleSystem system;
@@ -15,22 +17,35 @@ public class ParticleCollision : MonoBehaviour
         system = GetComponent<ParticleSystem>();
         hitVFX = GetComponentInParent<BulletHellSpawner>().hitVFX;
         damage = GetComponentInParent<BulletHellSpawner>().damage;
+        nrgValue = GetComponentInParent<BulletHellSpawner>().nrgValue;
+        isNRGProjectiles = GetComponentInParent<BulletHellSpawner>().isNRGProjectiles;
     }
 
 
     private void OnParticleCollision(GameObject collision)
     { 
         int events = system.GetCollisionEvents(collision, collisionEvents);
-        Debug.Log("Hit");
-        if(collision.gameObject.TryGetComponent<Character>(out Character character))
+        if(collision.gameObject.TryGetComponent<Player>(out Player player))
         {
-            character.TakeDamage(damage);
-            PoolManager.Release(hitVFX, collisionEvents[0].intersection, Quaternion.LookRotation(collisionEvents[0].normal));
-        }
+            if(isNRGProjectiles)
+            {
+                if(player.isProjectileActive == false)
+                {
+                    PlayerProjectileNRGSys.Instance.Obtain(nrgValue);
+                    PoolManager.Release(hitVFX, collisionEvents[0].intersection, Quaternion.LookRotation(collisionEvents[0].normal));
+                }
+                else
+                {
+                    player.TakeDamage(damage);
+                    PoolManager.Release(hitVFX, collisionEvents[0].intersection, Quaternion.LookRotation(collisionEvents[0].normal));
+                }
+            }
+            else
+            {
+                player.TakeDamage(damage);
+                PoolManager.Release(hitVFX, collisionEvents[0].intersection, Quaternion.LookRotation(collisionEvents[0].normal));
+            }
 
-        // for(int i = 0; i < events; i++)
-        // {
-        //     PoolManager.Release(hitVFX, collisionEvents[i].intersection, Quaternion.LookRotation(collisionEvents[i].normal));
-        // }
+        }
     }
 }

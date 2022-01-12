@@ -45,7 +45,11 @@ public class Boss : Enemy
 
     public override void TakeDamage(float damage)
     {
-        StartCoroutine(nameof(HurtEffect));
+        // StartCoroutine(nameof(HurtEffect));
+        // if(gameObject.activeSelf)
+        // {
+        //     StartCoroutine(HurtEffect());
+        // }
         base.TakeDamage(damage);
         healthBar.UpdateStates(health, maxHealth);
     }

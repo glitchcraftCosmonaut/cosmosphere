@@ -59,7 +59,7 @@ public class Viewport : Singleton<Viewport>
         Vector3 position = Vector3.zero;
 
         position.x = minX + paddingX;
-        position.y = Random.Range(minY + paddingY, maxY - paddingY);
+        position.y = minY + paddingY;
 
         return position;
     }

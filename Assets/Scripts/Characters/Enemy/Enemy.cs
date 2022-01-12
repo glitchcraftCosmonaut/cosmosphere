@@ -6,9 +6,9 @@ public class Enemy : Character
     [SerializeField] int scorePoint = 100;
     [SerializeField] int deathEnergyBonus = 3;
     [SerializeField] protected int healthFactor;
-    [SerializeField] Material hurtMat;
-    private SpriteRenderer sp;
-    private Material defaultMat2D;
+    // [SerializeField] Material hurtMat;
+    // private SpriteRenderer sp;
+    // private Material defaultMat2D;
 
     LootSpawner lootSpawner;
 
@@ -37,12 +37,16 @@ public class Enemy : Character
 
     public override void TakeDamage(float damage)
     {
-        StartCoroutine(nameof(HurtEffect));
+        // if(gameObject.activeSelf)
+        // {
+        //     StartCoroutine(HurtEffect());
+        // }
         base.TakeDamage(damage);
     }
 
     public override void Die()
     {
+        StopCoroutine(nameof(HurtEffect));
         ScoreManager.Instance.AddScore(scorePoint);
         PlayerEnergy.Instance.Obtain(deathEnergyBonus);
         EnemyManager.Instance.RemoveFromList(gameObject);
@@ -55,10 +59,10 @@ public class Enemy : Character
         maxHealth += (int)(EnemyManager.Instance.WaveNumber / healthFactor);
     }
 
-    protected IEnumerator HurtEffect()
-    {
-        sp.material = hurtMat;
-        yield return new WaitForSeconds(0.2f);
-        sp.material = defaultMat2D;
-    }
+    // IEnumerator HurtEffect()
+    // {
+    //     sp.material = hurtMat;
+    //     yield return new WaitForSeconds(0.2f);
+    //     sp.material = defaultMat2D;
+    // }
 }

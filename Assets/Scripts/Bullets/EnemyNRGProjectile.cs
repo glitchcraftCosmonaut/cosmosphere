@@ -9,9 +9,11 @@ public class EnemyNRGProjectile : MonoBehaviour
     [SerializeField] protected float moveSpeed = 10f;
 
     [SerializeField] protected Vector2 moveDirection;
-    void OnEnable() 
+    protected GameObject target;
+
+    protected virtual void OnEnable() 
     {
-        StartCoroutine(MoveDirectlyCoroutine());
+        StartCoroutine(nameof(MoveDirectlyCoroutine));
     }
 
     void OnCollisionEnter2D(Collision2D collision)
@@ -41,6 +43,7 @@ public class EnemyNRGProjectile : MonoBehaviour
             yield return null;
         }
     }
+    protected void SetTarget(GameObject target) => this.target = target;
     public void Move() => transform.Translate(moveDirection * moveSpeed * Time.deltaTime);
 
 }
