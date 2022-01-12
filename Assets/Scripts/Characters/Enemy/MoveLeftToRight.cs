@@ -13,6 +13,7 @@ public class MoveLeftToRight : MonoBehaviour
     [SerializeField]float continuousFireDuration = 1.5f;
     [SerializeField] protected float minFireInterval;
     [SerializeField] protected float maxFireInterval;
+    [SerializeField] protected float spawnYPos = 2f;
     float idleDelay = 4.5f;
 
     protected float paddingX;
@@ -69,9 +70,10 @@ public class MoveLeftToRight : MonoBehaviour
 
     IEnumerator MoveLeftToRighCoroutine()
     {
-        transform.position = Viewport.Instance.RandomEnemySpawnPositonFromLeft(-paddingX, paddingY);
+        transform.position = Viewport.Instance.RandomEnemySpawnPositonFromLeft(-paddingX, paddingY + spawnYPos);
 
         targetPosition = Viewport.Instance.RightHalfPosition(paddingX);
+        // targetPosition = new Vector3(-1.74f, transform.position.y, transform.position.z);
 
         while(gameObject.activeSelf)
         {
@@ -87,10 +89,12 @@ public class MoveLeftToRight : MonoBehaviour
             {
                 yield return waitForIdleDelay;
                 //set new target position
-                targetPosition = Viewport.Instance.RandomEnemySpawnPosition(paddingX, paddingY);
-                if(transform.position.x > 10)
+                // targetPosition = Viewport.Instance.RandomEnemySpawnPosition(paddingX, paddingY);
+                targetPosition = Viewport.Instance.RandomEnemySpawnPositonFromLeft(-paddingX, paddingY + spawnYPos);
+                if(transform.position.x < -9)
                 {
                     gameObject.SetActive(false);
+                    EnemyManager.Instance.RemoveFromList(gameObject);
                 }
             }
 
@@ -104,7 +108,7 @@ public class MoveLeftToRight : MonoBehaviour
         magazine.Clear();
             //launch projectile 2 or 3
         
-        magazine.Add(projectiles[0]);
+        magazine.Add(projectiles[Random.Range(0, projectiles.Length)]);
             
     }
     IEnumerator RandomlyFiresCoroutine()

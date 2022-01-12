@@ -35,7 +35,7 @@ public class EnemyManager : Singleton<EnemyManager>
         waitTimeBetweenSpawns = new WaitForSeconds(timeBetweenSpawns);
         waitTimeBetweenWaves = new WaitForSeconds(timeBetweenWaves);
         waitUIWarning = new WaitForSeconds(timeUIWarning);
-        waitUntilNoEnemy = new WaitUntil(() => enemyList.Count ==0);
+        waitUntilNoEnemy = new WaitUntil(() => enemyList.Count == 0);
     }
 
 
@@ -65,6 +65,7 @@ public class EnemyManager : Singleton<EnemyManager>
             for(int i = 0; i < enemyAmount; i++)
             {
                 enemyList.Add(PoolManager.Release(enemyPrefab[Random.Range(0, enemyPrefab.Length)]));
+                // enemyList.Add(PoolManager.Release(enemyPrefab[enemyPrefab.Length]));
 
                 yield return waitTimeBetweenSpawns;
             }

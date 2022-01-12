@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9ee29a8bf279dfb449cfa28a480cbdd2, type: 3}
+  m_Name: Wave 2 Stage 1
+  m_EditorClassIdentifier: 
+  <count>k__BackingField: 2
+  <rate>k__BackingField: 1
+  <waveTimer>k__BackingField: 1
+  <enemy>k__BackingField:
+  - {fileID: 9077761528757977344, guid: c398e0a5efc4423448d55b476d0ddd85, type: 3}
+  - {fileID: 9077761528757977344, guid: c398e0a5efc4423448d55b476d0ddd85, type: 3}

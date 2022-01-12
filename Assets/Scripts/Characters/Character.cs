@@ -6,11 +6,21 @@ public class Character : MonoBehaviour
 {
     [SerializeField] GameObject deathVFX;
     [SerializeField] AudioData[] deathSFX;
+
+    [Header("===Material===")]
+    [SerializeField] protected Material hurtMat;
+    protected SpriteRenderer sp;
+    protected Material defaultMat2D;
     
 
     [Header("HEALTH SYSTEM")]
     [SerializeField] protected float maxHealth;
     protected float health;
+
+    // private void Awake() {
+    //     sp = GetComponentInChildren<SpriteRenderer>();
+    //     defaultMat2D = GetComponentInChildren<SpriteRenderer>().material;
+    // }
 
     protected virtual void OnEnable()
     {
@@ -23,8 +33,8 @@ public class Character : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
         if(health == 0f) return;
+        StartCoroutine(HurtEffect());
         health -= damage;
-        // StartCoroutine(HurtEffectController.Instance.HurtEffect());
         if(health <= 0)
         {
             Die();
@@ -66,6 +76,13 @@ public class Character : MonoBehaviour
 
             TakeDamage(maxHealth * percent);
         }
+    }
+
+    protected virtual IEnumerator HurtEffect()
+    {
+        sp.material = hurtMat;
+        yield return new WaitForSeconds(0.1f);
+        sp.material = defaultMat2D;
     }
 
 }

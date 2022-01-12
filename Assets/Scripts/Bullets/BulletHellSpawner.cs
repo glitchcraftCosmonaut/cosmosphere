@@ -6,6 +6,8 @@ public class BulletHellSpawner : MonoBehaviour
 {
     public GameObject hitVFX;
     [SerializeField] public float damage;
+    public int nrgValue;
+    public bool isNRGProjectiles;
     // [SerializeField] public float duration = 2f;
     [SerializeField] public float continuousFireTimer = 2f;
     float currentTimer;

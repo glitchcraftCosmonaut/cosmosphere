@@ -163,3 +163,4 @@ MonoBehaviour:
   hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
   moveSpeed: 10
   moveDirection: {x: -1, y: 0}
+  isNRGAiming: 0

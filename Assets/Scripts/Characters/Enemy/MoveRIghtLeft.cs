@@ -64,6 +64,7 @@ public class MoveRightLeft : MonoBehaviour
             if(pos.x < -10)
             {
                 gameObject.SetActive(false);
+                EnemyManager.Instance.RemoveFromList(gameObject);
             }
 
             transform.position = pos;

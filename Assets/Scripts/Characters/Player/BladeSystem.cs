@@ -9,7 +9,6 @@ public class BladeSystem : MonoBehaviour
     Animator slashAnimator;
     [SerializeField] AudioData slashSFX = null;
     [SerializeField] AudioData hitSFX = null;
-    [SerializeField] protected GameObject hitVFX;
 
     [SerializeField] protected float damage;
 
@@ -101,7 +100,6 @@ public class BladeSystem : MonoBehaviour
             character.TakeDamage(damage);
 
             // var contactPoint = collision.GetContact(0);
-            PoolManager.Release(hitVFX);
             AudioManager.Instance.PlayRandomSFX(hitSFX);
             // gameObject.SetActive(false);
         }
