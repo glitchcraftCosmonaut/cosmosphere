@@ -4969,18 +4969,18 @@ MonoBehaviour:
   hitVFX: {fileID: 7203458116342931450, guid: 975f9549f84dd594a84456abeb05e287, type: 3}
   hitSFX:
   - audioClip: {fileID: 8300000, guid: 75adfe9a619833445a701305b983e548, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: e11a5a019377fbd4c81caa0adcb4c236, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: bb6cdd13aeb95f743847b1cd460889bc, type: 3}
-    volume: 1
+    volume: 0.3
   damage: 50
   moveSpeed: 10
   moveDirection: {x: 1, y: 0}
   guidanceSystem: {fileID: 3698892069994995482}
   targetAcquiredVoice:
     audioClip: {fileID: 8300000, guid: c4cf751a887f22949ae83b9dd67bb587, type: 3}
-    volume: 5
+    volume: 1
   lowSpeed: 4
   highSpeed: 35
   variableSpeedDelay: 0.5

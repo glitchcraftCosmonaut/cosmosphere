@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 1886703243126500658}
   - component: {fileID: 1886703243126500657}
   - component: {fileID: 1536781779790042035}
-  - component: {fileID: 4631736167916330415}
+  - component: {fileID: 7569662269434562416}
   m_Layer: 10
-  m_Name: EnemyBullet_10 Clock
+  m_Name: EnemyBullet_Horizontal
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,13 +145,13 @@ MonoBehaviour:
   hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
   hitSFX:
   - audioClip: {fileID: 8300000, guid: 2e071f5b8b8467d45a5e6e24c23c6ad4, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: 958408b32ccf3714ea02821877b0870c, type: 3}
-    volume: 1
+    volume: 0.3
   damage: 20
   moveSpeed: 10
-  moveDirection: {x: -1, y: 0.1667}
---- !u!70 &4631736167916330415
+  moveDirection: {x: -1, y: 0}
+--- !u!70 &7569662269434562416
 CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

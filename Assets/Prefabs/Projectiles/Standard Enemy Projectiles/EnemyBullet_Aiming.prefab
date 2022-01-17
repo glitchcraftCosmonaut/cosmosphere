@@ -71,7 +71,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -616763103943080902, guid: ab87af4b0b8a0c544b18b739c90ae186, type: 3}
+  m_Sprite: {fileID: 9062058152343574259, guid: ab87af4b0b8a0c544b18b739c90ae186, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 1
   m_FlipY: 0
@@ -92,10 +92,10 @@ GameObject:
   m_Component:
   - component: {fileID: 1886703243126500658}
   - component: {fileID: 1886703243126500657}
-  - component: {fileID: 1536781779790042035}
-  - component: {fileID: 7569662269434562416}
+  - component: {fileID: 2391294810461764362}
+  - component: {fileID: 5353247916345738821}
   m_Layer: 10
-  m_Name: EnemyBullet_Horizontal
+  m_Name: EnemyBullet_Aiming
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -130,7 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   destroyGameObject: 0
   lifeTime: 3
---- !u!114 &1536781779790042035
+--- !u!114 &2391294810461764362
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -139,20 +139,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 1886703243126500656}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0fae16945a7bcee489c29f022ca48754, type: 3}
+  m_Script: {fileID: 11500000, guid: 0649294d95db03d45b27b6c8fad62dd6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
   hitSFX:
   - audioClip: {fileID: 8300000, guid: 2e071f5b8b8467d45a5e6e24c23c6ad4, type: 3}
-    volume: 1
-  - audioClip: {fileID: 8300000, guid: 958408b32ccf3714ea02821877b0870c, type: 3}
-    volume: 1
+    volume: 0.3
   damage: 20
   moveSpeed: 10
-  moveDirection: {x: -1, y: 0}
---- !u!70 &7569662269434562416
-CapsuleCollider2D:
+  moveDirection: {x: 0, y: 0}
+--- !u!60 &5353247916345738821
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -164,6 +162,23 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0558021, y: -0.00069324014}
-  m_Size: {x: 0.45257816, y: 0.25592315}
-  m_Direction: 1
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0.13331938, y: 0.039619505}
+      - {x: 0.044594765, y: 0.13211103}
+      - {x: -0.039299488, y: 0.13108876}
+      - {x: -0.1279211, y: 0.043554593}
+      - {x: -0.12810522, y: -0.0412046}
+      - {x: -0.045444906, y: -0.13092838}
+      - {x: 0.044805646, y: -0.13263534}
+      - {x: 0.1332674, y: -0.04182987}

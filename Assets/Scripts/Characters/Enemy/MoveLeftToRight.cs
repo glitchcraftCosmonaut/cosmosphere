@@ -126,6 +126,8 @@ public class MoveLeftToRight : MonoBehaviour
         LoadProjectile();
         muzzleVFX.Play();
         float continuousFireTimer = 0f;
+        if(GameManager.GameState == GameState.GameOver) yield break;
+
 
         while(continuousFireTimer < continuousFireDuration)
         {
