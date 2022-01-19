@@ -93,7 +93,7 @@ public class Player : Character
     public bool IsFullPower => weaponPower == 1;
 
 
-
+    #region UNITY MONOBEHAVIOUR
     private void Awake() 
     {
         playerRigidbody = GetComponent<Rigidbody2D>();
@@ -167,6 +167,9 @@ public class Player : Character
         input.EnableGameplayInput();
     }
 
+    #endregion
+
+    #region HEALTH SYSTEM
     public override void RestoreHealth(float value)
     {
         base.RestoreHealth(value);
@@ -217,7 +220,7 @@ public class Player : Character
     {
         if(other.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
-            TakeDamage(50);
+            TakeDamage(30);
             enemy.Die();
         }
     }
@@ -228,7 +231,7 @@ public class Player : Character
     //     yield return new WaitForSeconds(0.1f);
     //     sp.material = defaultMat2D;
     // }
-    
+    #endregion
 
     #region MOVE
     void Move(Vector2 moveInput)

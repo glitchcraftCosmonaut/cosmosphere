@@ -71,9 +71,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 793029382673577099, guid: ab87af4b0b8a0c544b18b739c90ae186, type: 3}
+  m_Sprite: {fileID: -616763103943080902, guid: ab87af4b0b8a0c544b18b739c90ae186, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_FlipX: 0
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 0.47407407, y: 0.47407407}
@@ -93,9 +93,9 @@ GameObject:
   - component: {fileID: 1886703243126500658}
   - component: {fileID: 1886703243126500657}
   - component: {fileID: 1536781779790042035}
-  - component: {fileID: 2717468299650223301}
+  - component: {fileID: -5614564718444309695}
   m_Layer: 10
-  m_Name: EnemyBullet_Basic
+  m_Name: EnemyBullet_8 Clock
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -145,14 +145,14 @@ MonoBehaviour:
   hitVFX: {fileID: 4801493125213720806, guid: 94d3dff6247d98e4cb4d8d6f0be5e291, type: 3}
   hitSFX:
   - audioClip: {fileID: 8300000, guid: 2e071f5b8b8467d45a5e6e24c23c6ad4, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: 958408b32ccf3714ea02821877b0870c, type: 3}
-    volume: 1
+    volume: 0.3
   damage: 20
   moveSpeed: 10
-  moveDirection: {x: -1, y: 0}
---- !u!58 &2717468299650223301
-CircleCollider2D:
+  moveDirection: {x: -1, y: -0.1667}
+--- !u!70 &-5614564718444309695
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -164,6 +164,6 @@ CircleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0}
-  serializedVersion: 2
-  m_Radius: 0.28125
+  m_Offset: {x: -0.0558021, y: -0.00069324014}
+  m_Size: {x: 0.45257816, y: 0.25592315}
+  m_Direction: 1

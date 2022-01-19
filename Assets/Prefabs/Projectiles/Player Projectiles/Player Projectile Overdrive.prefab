@@ -82,12 +82,12 @@ MonoBehaviour:
   hitVFX: {fileID: 5060298685065931927, guid: f4dff8942dbf789478c9fccb23233631, type: 3}
   hitSFX:
   - audioClip: {fileID: 8300000, guid: 75adfe9a619833445a701305b983e548, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: e11a5a019377fbd4c81caa0adcb4c236, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: bb6cdd13aeb95f743847b1cd460889bc, type: 3}
-    volume: 1
-  damage: 5
+    volume: 0.3
+  damage: 3
   moveSpeed: 30
   moveDirection: {x: 1, y: 0}
   guidanceSystem: {fileID: -6379743594670726035}

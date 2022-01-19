@@ -140,7 +140,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 4
+  m_Constraints: 7
 --- !u!58 &6358573079620470514
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -176,11 +176,11 @@ MonoBehaviour:
   - {fileID: 1886703243126500656, guid: 94712f818a555de49a7b7734cde55ff2, type: 3}
   projectileLaunchSFX:
   - audioClip: {fileID: 8300000, guid: 406abe6e803b244eca380af5865dc5cb, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: 56c2ee139e8c844ba9a3a17370e3b763, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: 35644134c067099459f55ecfa2efd85d, type: 3}
-    volume: 1
+    volume: 0.3
   muzzle: {fileID: 7489130871700793590}
   muzzleVFX: {fileID: 2196700902610262633}
   minFireInterval: 0.3
@@ -200,14 +200,16 @@ MonoBehaviour:
   deathVFX: {fileID: 2342042931496088306, guid: 97b415311529fa145aacd3eedaac728e, type: 3}
   deathSFX:
   - audioClip: {fileID: 8300000, guid: 9314f85ef4c5ea04a87a0323c78fdd2e, type: 3}
-    volume: 1
+    volume: 0.3
   - audioClip: {fileID: 8300000, guid: 0f2184b0c1d094741b11e8f4077c52e9, type: 3}
-    volume: 1
+    volume: 0.3
+  hurtMat: {fileID: 2100000, guid: 353197135984a4346abbc1529b64b129, type: 2}
   maxHealth: 12
   scorePoint: 100
   deathEnergyBonus: 3
   healthFactor: 2
-  hurtMat: {fileID: 2100000, guid: 353197135984a4346abbc1529b64b129, type: 2}
+  projectile: {fileID: 5697942049174453292, guid: fc804c0e7d9c7b749b5b93aa7442d44b, type: 3}
+  numberOfColumns: 10
 --- !u!114 &2978739685290925754
 MonoBehaviour:
   m_ObjectHideFlags: 0
