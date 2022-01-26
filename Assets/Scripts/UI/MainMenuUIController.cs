@@ -5,18 +5,21 @@ public class MainMenuUIController : MonoBehaviour
 {
     [Header("Canvas")]
     [SerializeField] Canvas mainMenuCanvas;
+    [SerializeField] Canvas howToPlayCanvas;
 
     [Header("Button")]
     [SerializeField] Button buttonStart;
-    [SerializeField] Button buttonOption;
+    [SerializeField] Button buttonHowToPlay;
+    [SerializeField] Button buttonBack;
     [SerializeField] Button buttonQuit;
 
 
     private void OnEnable()
     {
         ButtonPressedBehavior.buttonFunctionTable.Add(buttonStart.gameObject.name, OnButtonStartClick);
-        ButtonPressedBehavior.buttonFunctionTable.Add(buttonOption.gameObject.name, OnButtonOptionClick);
+        ButtonPressedBehavior.buttonFunctionTable.Add(buttonHowToPlay.gameObject.name, OnButtonHowToPlayClick);
         ButtonPressedBehavior.buttonFunctionTable.Add(buttonQuit.gameObject.name, OnButtonQuitClick);
+        ButtonPressedBehavior.buttonFunctionTable.Add(buttonBack.gameObject.name, OnButtonBackClick);
     }
 
     private void OnDisable()
@@ -33,12 +36,39 @@ public class MainMenuUIController : MonoBehaviour
     void OnButtonStartClick()
     {
         mainMenuCanvas.enabled = false;
+        howToPlayCanvas.enabled = false;
+        // mainMenuCanvas.SetActive(false);
+        // howToPlayCanvas.SetActive(false);
         SceneLoader.Instance.LoadGamePlayScene();
     }
 
-    void OnButtonOptionClick()
+    void OnButtonHowToPlayClick()
     {
-        UIInput.Instance.SelectUI(buttonOption);
+        mainMenuCanvas.enabled = false;
+        howToPlayCanvas.enabled = true;
+        buttonBack.enabled = true;
+        buttonHowToPlay.enabled = false;
+        buttonStart.enabled = false;
+        buttonQuit.enabled =false;
+        // mainMenuCanvas.SetActive(false);
+        // howToPlayCanvas.SetActive(true);
+        // UIInput.Instance.SelectUI(buttonHowToPlay);
+        UIInput.Instance.SelectUI(buttonBack);
+
+    }
+
+    void OnButtonBackClick()
+    {
+        mainMenuCanvas.enabled = true;
+        howToPlayCanvas.enabled = false;
+        buttonBack.enabled = false;
+        buttonHowToPlay.enabled = true;
+        buttonStart.enabled = true;
+        buttonQuit.enabled =true;
+        // mainMenuCanvas.SetActive(true);
+        // howToPlayCanvas.SetActive(false);
+        UIInput.Instance.SelectUI(buttonStart);
+
     }
 
     void OnButtonQuitClick()

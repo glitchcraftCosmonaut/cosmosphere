@@ -18,7 +18,7 @@ public class GameplayUiController : MonoBehaviour
 
     [Header("button")]
     [SerializeField] Button resumeButton;
-    [SerializeField] Button optionButton;
+    // [SerializeField] Button optionButton;
     [SerializeField] Button mainMenuButton;
 
     int buttonPressedParameterID = Animator.StringToHash("Pressed");
@@ -33,7 +33,7 @@ public class GameplayUiController : MonoBehaviour
         // mainMenuButton.onClick.AddListener(OnMainMenuButtonClick);
 
         ButtonPressedBehavior.buttonFunctionTable.Add(resumeButton.gameObject.name, OnResumeButtonClick);
-        ButtonPressedBehavior.buttonFunctionTable.Add(optionButton.gameObject.name, OnOptionButtonClick);
+        // ButtonPressedBehavior.buttonFunctionTable.Add(optionButton.gameObject.name, OnOptionButtonClick);
         ButtonPressedBehavior.buttonFunctionTable.Add(mainMenuButton.gameObject.name, OnMainMenuButtonClick);
     }
 
@@ -79,12 +79,12 @@ public class GameplayUiController : MonoBehaviour
         playerInput.SwitchToFixedUpdateMode();
     }
 
-    void OnOptionButtonClick()
-    {
-        //todo
-        UIInput.Instance.SelectUI(optionButton);
-        playerInput.EnablePauseInput();
-    }
+    // void OnOptionButtonClick()
+    // {
+    //     //todo
+    //     UIInput.Instance.SelectUI(optionButton);
+    //     playerInput.EnablePauseInput();
+    // }
 
     void OnMainMenuButtonClick()
     {
